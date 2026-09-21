@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>生存大陆 · 官网</title>
+<style>
+  :root{
+    --grass:#6aa84f;
+    --grass-dark:#3f6b28;
+    --grass-light:#9ed45c;
+    --dirt:#8b5a2b;
+    --bg:#12141a;
+    --panel:#1e2129;
+    --panel2:#262b36;
+    --line:#0b0d12;
+    --text:#e8eaf0;
+    --muted:#98a1b0;
+    --gold:#ffcc33;
+    --diamond:#4dd8e6;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;scroll-padding-top:90px;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:"Segoe UI","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+    line-height:1.75;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;}
+
+  /* ============ 通用像素组件 ============ */
+  .container{width:min(1160px,92vw);margin:0 auto;}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:12px 22px;
+    font:inherit;font-weight:700;font-size:15px;letter-spacing:.5px;
+    color:var(--text);
+    background:var(--panel2);
+    border:3px solid var(--line);
+    box-shadow:
+      inset -4px -4px 0 rgba(0,0,0,.35),
+      inset 4px 4px 0 rgba(255,255,255,.10),
+      5px 5px 0 rgba(0,0,0,.45);
+    cursor:pointer;
+    transition:transform .08s ease, box-shadow .08s ease, filter .15s ease;
+    user-select:none;
+    white-space:nowrap;
+  }
+  .btn:hover{filter:brightness(1.12);}
+  .btn:active{
+    transform:translate(3px,3px);
+    box-shadow:
+      inset -4px -4px 0 rgba(0,0,0,.35),
+      inset 4px 4px 0 rgba(255,255,255,.10),
+      2px 2px 0 rgba(0,0,0,.45);
+  }
+  .btn-primary{background:var(--grass);}
+  .btn-ghost{background:rgba(255,255,255,.06);}
+  .btn-sm{padding:9px 16px;font-size:14px;}
+
+  .sec-head{text-align:center;margin-bottom:50px;}
+  .sec-title{
+    font-size:clamp(24px,3.4vw,38px);
+    font-weight:900;letter-spacing:3px;
+    text-shadow:3px 3px 0 rgba(0,0,0,.8);
+  }
+  .sec-title .accent{color:var(--grass-light);}
+  .sec-sub{color:var(--muted);margin-top:10px;font-size:15px;}
+
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .55s ease,transform .55s ease;}
+  .reveal.in{opacity:1;transform:none;}
+
+  /* ============ 导航 ============ */
+  .nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(18,20,26,.94);
+    backdrop-filter:blur(10px);
+    border-bottom:3px solid var(--line);
+    box-shadow:0 4px 0 rgba(0,0,0,.4);
+  }
+  .nav-inner{
+    width:min(1160px,92vw);margin:0 auto;
+    height:72px;display:flex;align-items:center;gap:22px;
+  }
+  .logo{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:2px;font-size:18px;}
+  .cube{
+    width:34px;height:34px;position:relative;flex:none;
+    background:var(--dirt);
+    border:3px solid var(--line);
+    box-shadow:inset -4px -4px 0 rgba(0,0,0,.35), inset 4px 4px 0 rgba(255,255,255,.12);
+  }
+  .cube::before{
+    content:"";position:absolute;left:0;right:0;top:0;height:38%;
+    background:var(--grass);
+    border-bottom:3px solid var(--line);
+    box-shadow:inset -4px -4px 0 rgba(0,0,0,.2), inset 4px 4px 0 rgba(255,255,255,.28);
+  }
+  .menu{display:flex;gap:4px;margin-left:auto;}
+  .menu a{
+    padding:8px 12px;font-size:15px;font-weight:600;color:var(--muted);
+    border:3px solid transparent;transition:.15s;
+  }
+  .menu a:hover{color:#fff;background:rgba(255,255,255,.06);border-color:var(--line);}
+  .nav-cta{display:flex;align-items:center;gap:10px;}
+  .menu-toggle{display:none;}
+
+  /* ============ Hero ============ */
+  .hero{
+    position:relative;overflow:hidden;
+    min-height:100vh;
+    display:flex;align-items:center;justify-content:center;
+    text-align:center;
+    padding:130px 5vw 150px;
+    background:linear-gradient(180deg,#080d1c 0%,#12203c 42%,#26405f 68%,#3f6180 100%);
+  }
+  .stars{
+    position:absolute;inset:0;opacity:.7;pointer-events:none;
+    background-image:
+      radial-gradient(2px 2px at 12% 22%,rgba(255,255,255,.85),transparent),
+      radial-gradient(2px 2px at 32% 12%,rgba(255,255,255,.6),transparent),
+      radial-gradient(2px 2px at 58% 26%,rgba(255,255,255,.7),transparent),
+      radial-gradient(2px 2px at 78% 14%,rgba(255,255,255,.5),transparent),
+      radial-gradient(2px 2px at 88% 34%,rgba(255,255,255,.65),transparent),
+      radial-gradient(2px 2px at 45% 8%,rgba(255,255,255,.45),transparent),
+      radial-gradient(2px 2px at 22% 40%,rgba(255,255,255,.4),transparent);
+  }
+  .cloud{
+    position:absolute;width:70px;height:22px;
+    background:rgba(255,255,255,.07);
+    box-shadow:
+      22px -22px 0 rgba(255,255,255,.07),
+      44px -22px 0 rgba(255,255,255,.07),
+      66px 0 0 rgba(255,255,255,.07),
+      -22px 0 0 rgba(255,255,255,.07);
+    animation:drift linear infinite;
+    pointer-events:none;
+  }
+  .c1{top:16%;animation-duration:70s;}
+  .c2{top:30%;animation-duration:95s;animation-delay:-35s;}
+  .c3{top:9%;animation-duration:120s;animation-delay:-70s;}
+  @keyframes drift{
+    from{transform:translateX(-220px);}
+    to{transform:translateX(110vw);}
+  }
+  .ground{
+    position:absolute;left:0;right:0;bottom:0;height:96px;
+    background:linear-gradient(#6aa84f 0 26px,#8b5a2b 26px 100%);
+    border-top:4px solid var(--line);
+    background-image:
+      repeating-linear-gradient(90deg,rgba(0,0,0,.13) 0 2px,transparent 2px 44px),
+      repeating-linear-gradient(0deg,rgba(0,0,0,.13) 0 2px,transparent 2px 44px),
+      linear-gradient(#6aa84f 0 26px,#8b5a2b 26px 100%);
+  }
+  .ground::after{
+    content:"";position:absolute;left:0;right:0;top:0;height:26px;
+    background:repeating-linear-gradient(90deg,rgba(255,255,255,.16) 0 4px,transparent 4px 26px);
+  }
+  .hero-inner{position:relative;z-index:3;max-width:920px;}
+
+  .tag{
+    display:inline-block;padding:7px 16px;font-size:13px;font-weight:700;
+    letter-spacing:2px;color:var(--grass-light);
+    background:rgba(0,0,0,.45);
+    border:3px solid var(--line);
+    box-shadow:4px 4px 0 rgba(0,0,0,.4);
+  }
+  .hero h1{
+    font-size:clamp(42px,8.5vw,90px);
+    font-weight:900;letter-spacing:8px;line-height:1.15;
+    margin:22px 0 6px;
+    background:linear-gradient(#b6ef6e 0%,#6aa84f 55%,#3f8a2c 100%);
+    -webkit-background-clip:text;background-clip:text;
+    color:transparent;
+    filter:drop-shadow(4px 4px 0 rgba(0,0,0,.65));
+  }
+  .hero .sub{
+    color:#c8d4e4;font-size:clamp(14px,1.7vw,18px);
+    max-width:640px;margin:14px auto 0;
+    text-shadow:2px 2px 0 rgba(0,0,0,.6);
+  }
+
+  .ip-box{
+    display:inline-flex;align-items:center;gap:14px;
+    margin:32px 0 26px;padding:10px 10px 10px 22px;
+    background:rgba(0,0,0,.5);
+    border:3px solid var(--line);
+    box-shadow:inset 0 0 0 2px rgba(255,255,255,.06), 7px 7px 0 rgba(0,0,0,.45);
+    flex-wrap:wrap;justify-content:center;
+  }
+  .ip-box code{
+    font-family:ui-monospace,Consolas,"Courier New",monospace;
+    font-size:clamp(14px,2.3vw,19px);
+    letter-spacing:1.5px;color:var(--gold);
+  }
+  .hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:44px;}
+
+  .hero-stats{
+    display:flex;gap:14px;justify-content:center;flex-wrap:wrap;
+  }
+  .stat{
+    min-width:120px;padding:14px 20px;
+    background:rgba(0,0,0,.42);
+    border:3px solid var(--line);
+    box-shadow:inset -4px -4px 0 rgba(0,0,0,.3), inset 4px 4px 0 rgba(255,255,255,.05), 5px 5px 0 rgba(0,0,0,.4);
+  }
+  .stat .num{
+    font-size:24px;font-weight:900;color:var(--grass-light);
+    font-family:ui-monospace,Consolas,monospace;letter-spacing:1px;
+  }
+  .stat .num.gold{color:var(--gold);}
+  .stat .num.cyan{color:var(--diamond);}
+  .stat .lab{font-size:12px;color:var(--muted);letter-spacing:1px;}
+
+  /* ============ 区块通用 ============ */
+  section{padding:96px 0;}
+  .features{background:var(--bg);}
+  .info{background:#161922;border-top:3px solid var(--line);border-bottom:3px solid var(--line);}
+  .join{background:var(--bg);}
+  .rules{background:#161922;border-top:3px solid var(--line);}
+
+  /* ============ 公告栏 ============ */
+  .notice{
+    background:#161922;
+    border-top:3px solid var(--line);
+    border-bottom:3px solid var(--line);
+    position:relative;
+  }
+  .notice::before{           /* 顶部木牌装饰条 */
+    content:"";
+    position:absolute;left:0;right:0;top:0;height:10px;
+    background:repeating-linear-gradient(90deg,#8b5a2b 0 26px,#7a4e25 26px 52px);
+    border-bottom:3px solid var(--line);
+  }
+
+  .notice-board{
+    max-width:900px;margin:0 auto;
+    display:grid;gap:16px;
+  }
+
+  .notice-item{
+    --accent:#6aa84f;
+    position:relative;
+    padding:22px 26px 22px 32px;
+    background:var(--panel);
+    border:3px solid var(--line);
+    box-shadow:
+      inset -4px -4px 0 rgba(0,0,0,.28),
+      inset 4px 4px 0 rgba(255,255,255,.05),
+      6px 6px 0 rgba(0,0,0,.4);
+    transition:transform .16s ease, box-shadow .16s ease;
+  }
+  .notice-item::before{       /* 左侧彩色条 */
+    content:"";
+    position:absolute;left:0;top:0;bottom:0;width:9px;
+    background:var(--accent);
+    border-right:3px solid var(--line);
+    box-shadow:inset -3px 0 0 rgba(0,0,0,.25);
+  }
+  .notice-item:hover{
+    transform:translateY(-4px);
+    box-shadow:
+      inset -4px -4px 0 rgba(0,0,0,.28),
+      inset 4px 4px 0 rgba(255,255,255,.05),
+      6px 10px 0 rgba(0,0,0,.5);
+  }
+  /* 置顶公告：底色稍亮 + 外发光 */
+  .notice-item.pinned{
+    background:var(--panel2);
+    box-shadow:
+      inset -4px -4px 0 rgba(0,0,0,.28),
+      inset 4px 4px 0 rgba(255,255,255,.07),
+      6px 6px 0 rgba(0,0,0,.45),
+      0 0 0 3px rgba(180,83,75,.18);
+  }
+
+  .notice-top{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:14px;flex-wrap:wrap;margin-bottom:12px;
+  }
+  .notice-tag{
+    display:inline-block;
+    padding:3px 11px;
+    font-size:12px;font-weight:900;letter-spacing:1.5px;
+    color:#fff;
+    border:3px solid var(--line);
+    box-shadow:inset -3px -3px 0 rgba(0,0,0,.32), inset 3px 3px 0 rgba(255,255,255,.28);
+    text-shadow:1px 1px 0 rgba(0,0,0,.45);
+  }
+  .tag-pin{background:#b4534b;}       /* 置顶 / 重要 */
+  .tag-update{background:#c9a227;}    /* 更新 / 版本 */
+  .tag-event{background:#2f9ea8;}     /* 活动 */
+  .tag-info{background:#6d7480;}      /* 一般通知 */
+
+  .notice-date{
+    font-family:ui-monospace,Consolas,monospace;
+    font-size:12.5px;letter-spacing:1px;color:var(--muted);
+  }
+  .notice-title{
+    font-size:18px;font-weight:900;letter-spacing:1px;
+    margin-bottom:8px;
+    text-shadow:2px 2px 0 rgba(0,0,0,.6);
+  }
+  .notice-text{
+    font-size:14.5px;color:#b9c2d0;line-height:1.95;
+  }
+  .notice-text + .notice-text{margin-top:6px;}
+  .notice-text b{color:var(--grass-light);}
+  .notice-text .gold{color:var(--gold);}
+  .notice-text .cyan{color:var(--diamond);}
+
+  .notice-list{
+    margin:10px 0 0 4px;padding:0;list-style:none;
+    font-size:14.5px;color:#b9c2d0;
+  }
+  .notice-list li{position:relative;padding-left:20px;line-height:1.9;}
+  .notice-list li::before{
+    content:"■";
+    position:absolute;left:0;top:0;
+    color:var(--accent);font-size:11px;line-height:2.4;
+  }
+
+  /* ============ 特色卡片 ============ */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;}
+  .card{
+    background:var(--panel);
+    border:3px solid var(--line);
+    box-shadow:inset -4px -4px 0 rgba(0,0,0,.28), inset 4px 4px 0 rgba(255,255,255,.05), 6px 6px 0 rgba(0,0,0,.4);
+    padding:28px 24px;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .card:hover{
+    transform:translateY(-6px);
+    box-shadow:inset -4px -4px 0 rgba(0,0,0,.28), inset 4px 4px 0 rgba(255,255,255,.05), 6px 12px 0 rgba(0,0,0,.5);
+  }
+  .card-icon{
+    width:46px;height:46px;margin-bottom:16px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:20px;
+    border:3px solid var(--line);
+    box-shadow:inset -4px -4px 0 rgba(0,0,0,.3), inset 4px 4px 0 rgba(255,255,255,.22);
+  }
+  .ic-green{background:#6aa84f;}
+  .ic-gold{background:#c9a227;}
+  .ic-cyan{background:#2f9ea8;}
+  .ic-purple{background:#7d5bb5;}
+  .ic-red{background:#b4534b;}
+  .ic-gray{background:#6d7480;}
+  .card h3{font-size:18px;font-weight:800;letter-spacing:1px;margin-bottom:8px;}
+  .card p{font-size:14.5px;color:var(--muted);}
+
+  /* ============ 服务器信息 ============ */
+  .info-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;
+  }
+  .info-item{
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+    padding:16px 20px;
+    background:var(--panel);
+    border:3px solid var(--line);
+    box-shadow:inset -4px -4px 0 rgba(0,0,0,.28), inset 4px 4px 0 rgba(255,255,255,.05);
+  }
+  .info-item .k{font-size:14px;color:var(--muted);letter-spacing:.5px;flex:none;}
+  .info-item .v{font-weight:700;font-size:14.5px;text-align:right;color:var(--gold);}
+  .info-item .v.green{color:var(--grass-light);}
+  .info-item .v.cyan{color:var(--diamond);}
+
+  /* ============ 加入步骤 ============ */
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;}
+  .step{
+    position:relative;
+    background:var(--panel);
+    border:3px solid var(--line);
+    box-shadow:inset -4px -4px 0 rgba(0,0,0,.28), inset 4px 4px 0 rgba(255,255,255,.05), 6px 6px 0 rgba(0,0,0,.4);
+    padding:30px 22px 24px;
+    text-align:center;
+  }
+  .step-num{
+    width:48px;height:48px;margin:0 auto 16px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:22px;font-weight:900;
+    background:var(--grass);color:#fff;
+    border:3px solid var(--line);
+    box-shadow:inset -4px -4px 0 rgba(0,0,0,.3), inset 4px 4px 0 rgba(255,255,255,.3);
+    text-shadow:2px 2px 0 rgba(0,0,0,.5);
+  }
+  .step h3{font-size:17px;font-weight:800;letter-spacing:1px;margin-bottom:8px;}
+  .step p{font-size:14px;color:var(--muted);}
+  .step code{
+    font-family:ui-monospace,Consolas,monospace;
+    color:var(--gold);font-size:13.5px;
+    background:rgba(0,0,0,.4);padding:1px 6px;border-radius:2px;
+  }
+
+  /* ============ 规则 ============ */
+  .rules-list{display:grid;gap:12px;max-width:860px;margin:0 auto;}
+  .rule{
+    display:flex;gap:16px;align-items:flex-start;
+    padding:16px 20px;
+    background:var(--panel);
+    border:3px solid var(--line);
+    box-shadow:inset -4px -4px 0 rgba(0,0,0,.28), inset 4px 4px 0 rgba(255,255,255,.05);
+  }
+  .rule-idx{
+    flex:none;width:30px;height:30px;margin-top:2px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:14px;font-weight:900;color:#fff;
+    background:#b4534b;
+    border:3px solid var(--line);
+    box-shadow:inset -3px -3px 0 rgba(0,0,0,.3), inset 3px 3px 0 rgba(255,255,255,.25);
+  }
+  .rule p{font-size:14.5px;color:#c3cbd8;}
+
+  /* ============ 页脚 ============ */
+  footer{
+    background:#0d0f14;
+    border-top:3px solid var(--line);
+    padding:56px 0 40px;
+    text-align:center;
+  }
+  .foot-logo{
+    display:inline-flex;align-items:center;gap:12px;
+    font-size:20px;font-weight:900;letter-spacing:3px;margin-bottom:16px;
+  }
+  footer .desc{color:var(--muted);font-size:14px;max-width:620px;margin:0 auto 22px;}
+  .foot-links{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:26px;}
+  .foot-links a{
+    padding:8px 16px;font-size:14px;color:var(--muted);
+    border:3px solid var(--line);background:var(--panel);
+    transition:.15s;
+  }
+  .foot-links a:hover{color:#fff;background:var(--panel2);}
+  .copyright{color:#5f6878;font-size:12.5px;line-height:2;}
+
+  /* ============ Toast ============ */
+  .toast{
+    position:fixed;left:50%;bottom:40px;
+    transform:translate(-50%,140%);
+    padding:14px 26px;
+    background:var(--grass);color:#fff;font-weight:700;font-size:15px;
+    border:3px solid var(--line);
+    box-shadow:inset -4px -4px 0 rgba(0,0,0,.3), inset 4px 4px 0 rgba(255,255,255,.28), 6px 6px 0 rgba(0,0,0,.5);
+    z-index:999;transition:transform .3s cubic-bezier(.2,1.4,.5,1);
+    pointer-events:none;
+  }
+  .toast.show{transform:translate(-50%,0);}
+
+  /* ============ 响应式 ============ */
+  @media (max-width:900px){
+    .menu{
+      position:fixed;top:72px;left:0;right:0;
+      flex-direction:column;gap:0;
+      background:rgba(18,20,26,.98);
+      border-bottom:3px solid var(--line);
+      padding:10px 5vw 18px;
+      display:none;
+    }
+    .menu.open{display:flex;}
+    .menu a{padding:14px 12px;border-bottom:2px solid rgba(255,255,255,.06);}
+    .menu-toggle{display:inline-flex;margin-left:auto;}
+    .nav-cta .btn-copy-nav{display:none;}
+    .nav-inner{gap:12px;}
+    section{padding:72px 0;}
+    .hero{padding:120px 5vw 130px;}
+    .hero h1{letter-spacing:4px;}
+    .ip-box{padding:12px;gap:10px;flex-direction:column;}
+    .stat{min-width:104px;padding:12px 14px;}
+    .stat .num{font-size:20px;}
+    .notice-item{padding:20px 18px 20px 26px;}
+  }
+  @media (max-width:420px){
+    .logo-text{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= 导航 ================= -->
+<header class="nav">
+  <div class="nav-inner">
+    <a class="logo" href="#home">
+      <span class="cube"></span>
+      <span class="logo-text">生存大陆</span>
+    </a>
+
+    <nav class="menu" id="menu">
+      <a href="#home">首页</a>
+      <a href="#notice">公告</a>
+      <a href="#features">玩法</a>
+      <a href="#info">服务器</a>
+      <a href="#join">加入</a>
+      <a href="#rules">规则</a>
+    </nav>
+
+    <div class="nav-cta">
+      <button class="btn btn-primary btn-sm btn-copy-nav" data-copy>复制 IP</button>
+      <button class="btn btn-sm menu-toggle" id="menuToggle" aria-label="菜单">☰</button>
+    </div>
+  </div>
+</header>
+
+<!-- ================= Hero ================= -->
+<section class="hero" id="home">
+  <div class="stars"></div>
+  <div class="cloud c1"></div>
+  <div class="cloud c2"></div>
+  <div class="cloud c3"></div>
+
+  <div class="hero-inner">
+    <span class="tag"> 生存 · 建造 · 生电</span>
+    <h1>生存大陆</h1>
+    <p class="sub">一个不用氪金、不用排队、2026年8月开荒的生存养老服。<br>带上你的镐子，来这片大陆盖个家吧。</p>
+
+    <div class="ip-box">
+      <code id="ipText">SCDL.9666.fun:28769</code>
+      <button class="btn btn-primary" data-copy>复制地址</button>
+    </div>
+
+    <div class="hero-btns">
+      <a class="btn btn-primary" href="#join">立即加入 →</a>
+      <a class="btn btn-ghost" href="#notice">查看公告</a>
+    </div>
+  </div>
+
+  <div class="ground"></div>
+</section>
+
+<!-- ================= 公告栏 ================= -->
+<section class="notice" id="notice">
+  <div class="container">
+    <div class="sec-head reveal">
+      <h2 class="sec-title">服务器<span class="accent">公告</span></h2>
+      <p class="sec-sub">最新消息、版本更新与活动通知，请定期查看</p>
+    </div>
+
+    <div class="notice-board">
+
+      <!-- ======== 公告 1（置顶） ======== -->
+      <article class="notice-item pinned reveal" style="--accent:#b4534b">
+        <div class="notice-top">
+          <span class="notice-tag tag-pin">置顶</span>
+          <time class="notice-date">2026-09-12</time>
+        </div>
+        <h3 class="notice-title">【必读】服务器新手指引与规则须知</h3>
+        <p class="notice-text">
+          欢迎来到生存大陆！第一次进服请先在出生点阅读告示牌，并完成 <b>/reg 密码 密码</b> 注册账号。
+          服务器支持离线登录，但请务必设置密码，避免被他人顶号。<span class="gold">（密码长度至少8位）</span>
+        </p>
+        <ul class="notice-list">
+          <li>禁止使用外挂、作弊客户端与连点器，违者永久封禁。</li>
+          <li>请及时圈地保护自己的建筑与箱子。</li>
+          <li>遇到问题可在群里 @管理，不要在聊天栏刷屏。</li>
+        </ul>
+      </article>
+
+      <!-- ======== 公告 2 ======== -->
+      <article class="notice-item reveal" style="--accent:#c9a227">
+        <div class="notice-top">
+          <span class="notice-tag tag-update">更新</span>
+          <time class="notice-date">2026-09-13</time>
+        </div>
+        <h3 class="notice-title">所有插件已更新</h3>
+        <p class="notice-text">
+          所有插件均已升级至 <b>最新版本</b>，支持 1.12.2~26.2 全版本客户端进入。
+          旧版本客户端（1.8 及以下）将无法连接，请及时更新客户端版本。
+        </p>
+        <p class="notice-text">
+          本次更新同步优化了领地粒子加载逻辑，TPS 长期稳定在 20.0，卡顿问题已明显改善。
+        </p>
+      </article>
+
+      <!-- ======== 公告 3 ======== -->
+      <article class="notice-item reveal" style="--accent:#7d5bb5">
+        <div class="notice-top">
+          <span class="notice-tag tag-info">维护</span>
+          <time class="notice-date">2026-09-13</time>
+        </div>
+        <h3 class="notice-title">9 月 30 日晚上关服维护</h3>
+        <p class="notice-text">
+          维护时间：<b>9 月 30 日 22:00 - 10 月 1 日 6:00</b>（预计 8 小时）。
+          维护期间服务器将关闭，请在9 月 30 日 22:00 前 <b>提前下线</b> ，避免物品丢失。
+        </p>
+        <p class="notice-text">
+          本次维护内容：存档备份、插件升级、修复已知的漏洞、为国庆假期做准备。
+        </p>
+      </article>
+
+      <!-- ======== 公告 4（示例：可复制这一整块来新增） ======== -->
+      <article class="notice-item reveal" style="--accent:#6aa84f">
+        <div class="notice-top">
+          <span class="notice-tag tag-info">通知</span>
+          <time class="notice-date">2026-09-20</time>
+        </div>
+        <h3 class="notice-title">服务器已推出聊天网！</h3>
+        <p class="notice-text">
+          经过服主（beishaoxia）的努力，成功肝出了服务器专属聊天网站！
+        </p>
+        <p class="notice-text">
+          聊天网为了方便<b>没进入QQ群</b>的玩家聊天，特意搭建了这个网站。<br>
+          网站链接：http://103.24.217.37:37803/<br>
+          聊天网只会在<span class="cyan">节假日</span>开启。
+        </p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ================= 玩法特色 ================= -->
+<section class="features" id="features">
+  <div class="container">
+    <div class="sec-head reveal">
+      <h2 class="sec-title">服务器<span class="accent">玩法</span></h2>
+      <p class="sec-sub">没有花里胡哨的充值系统，只有原汁原味的方块世界</p>
+    </div>
+
+    <div class="grid">
+      <div class="card reveal">
+        <div class="card-icon ic-green">🌱</div>
+        <h3>纯净生存</h3>
+        <p>原版生存机制，不卖任何影响平衡的道具。每月准时备份存档，永不删档。</p>
+      </div>
+
+      <div class="card reveal">
+        <div class="card-icon ic-cyan">☁️</div>
+        <h3>建筑大赛</h3>
+        <p>从火柴盒到精美建筑，一切皆由你来改变！</p>
+      </div>
+
+      <div class="card reveal">
+        <div class="card-icon ic-gold">🔒</div>
+        <h3>领地保护</h3>
+        <p>安全的领地插件，专业防熊，妈妈再也不用担心我家被炸了！</p>
+      </div>
+
+      <div class="card reveal">
+        <div class="card-icon ic-purple">😝</div>
+        <h3>称号系统</h3>
+        <p>免费定制称号，你想让别人怎么称呼你呢？</p>
+      </div>
+
+      <div class="card reveal">
+        <div class="card-icon ic-red">⚙️</div>
+        <h3>生电友好</h3>
+        <p>TNT 复制、刷怪塔、红石机器全部开放，只要不卡服，随便你怎么折腾。</p>
+      </div>
+
+      <div class="card reveal">
+        <div class="card-icon ic-gray">🏆</div>
+        <h3>除夕活动</h3>
+        <p>每年除夕晚上24:00准时发放奖励！绝不耽搁！</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 服务器信息 ================= -->
+<section class="info" id="info">
+  <div class="container">
+    <div class="sec-head reveal">
+      <h2 class="sec-title">服务器<span class="accent">信息</span></h2>
+      <p class="sec-sub">进服前请先确认版本与连接方式</p>
+    </div>
+
+    <div class="info-grid reveal">
+      <div class="info-item"><span class="k">服务器地址</span><span class="v">SCDL.9666.fun</span></div>
+      <div class="info-item"><span class="k">默认端口</span><span class="v">28769</span></div>
+      <div class="info-item"><span class="k">Java 版本</span><span class="v green">1.21.11（推荐）</span></div>
+      <div class="info-item"><span class="k">正版验证</span><span class="v cyan">关闭 · 离线可进</span></div>
+      <div class="info-item"><span class="k">最大人数</span><span class="v">10 人</span></div>
+      <div class="info-item"><span class="k">服务器地区</span><span class="v">中国 · 北京 BGP 多线</span></div>
+      <div class="info-item"><span class="k">玩家交流群</span><span class="v">647143590（必进）</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 加入步骤 ================= -->
+<section class="join" id="join">
+  <div class="container">
+    <div class="sec-head reveal">
+      <h2 class="sec-title">如何<span class="accent">加入</span></h2>
+      <p class="sec-sub">四步搞定，新手也能一分钟进服</p>
+    </div>
+
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-num">1</div>
+        <h3>启动游戏</h3>
+        <p>打开启动器，选择 <code>1.21.11（推荐）</code> 版本并进入游戏。</p>
+      </div>
+
+      <div class="step reveal">
+        <div class="step-num">2</div>
+        <h3>添加服务器</h3>
+        <p>点击「多人游戏」→「添加服务器」，进入服务器信息填写界面。</p>
+      </div>
+
+      <div class="step reveal">
+        <div class="step-num">3</div>
+        <h3>输入地址</h3>
+        <p>服务器地址填写 <code>SCDL.9666.fun:28769</code>，名称随便写，点完成。</p>
+      </div>
+
+      <div class="step reveal">
+        <div class="step-num">4</div>
+        <h3>开始游玩</h3>
+        <p>双击服务器进入世界。第一次进服请先阅读出生点的规则告示牌。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 服务器规则 ================= -->
+<section class="rules" id="rules">
+  <div class="container">
+    <div class="sec-head reveal">
+      <h2 class="sec-title">服务器<span class="accent">规则</span></h2>
+      <p class="sec-sub">自由的前提是不影响他人，违者视情节禁言或封禁</p>
+    </div>
+
+    <div class="rules-list">
+      <div class="rule reveal">
+        <div class="rule-idx">1</div>
+        <p>禁止使用任何作弊客户端、外挂、连点器、宏脚本等第三方辅助工具。</p>
+      </div>
+      <div class="rule reveal">
+        <div class="rule-idx">2</div>
+        <p>禁止恶意破坏他人建筑、偷窃他人箱内物品，圈地外的建筑同样受保护。</p>
+      </div>
+      <div class="rule reveal">
+        <div class="rule-idx">3</div>
+        <p>禁止在聊天频道刷屏、辱骂他人、发布广告或与游戏无关的链接。</p>
+      </div>
+      <div class="rule reveal">
+        <div class="rule-idx">4</div>
+        <p>禁止利用服务器漏洞刷取物品或经验，发现漏洞请私聊管理，会有奖励。</p>
+      </div>
+      <div class="rule reveal">
+        <div class="rule-idx">5</div>
+        <p>禁止在公共区域建造严重卡服的大型机器，红石设备请放在自己领地内。</p>
+      </div>
+      <div class="rule reveal">
+        <div class="rule-idx">6</div>
+        <p>尊重每一位玩家，管理员不是保姆，遇到问题请先自行查看群公告。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 页脚 ================= -->
+<footer id="contact">
+  <div class="container">
+    <div class="foot-logo">
+      <span class="cube"></span>
+      <span>生存大陆</span>
+    </div>
+    <p class="desc">一个由玩家自己维护的 Minecraft 生存服务器，没有充值，没有 VIP，只有一群喜欢方块的人。</p>
+
+    <div class="foot-links">
+      <a href="#home">首页</a>
+      <a href="#notice">公告</a>
+      <a href="#features">玩法</a>
+      <a href="#join">加入</a>
+      <a href="#" data-copy>复制 IP</a>
+    </div>
+
+    <p class="copyright">
+      本站为玩家自建服务器静态宣传网站，与 Mojang AB 及 Microsoft 无任何关联。<br>
+      Minecraft 是 Mojang AB 的商标。<br>
+      © 2026 生存大陆 · Minecraft
+    </p>
+  </div>
+</footer>
+
+<div class="toast" id="toast">已复制</div>
+
+<script>
+  /* ---------- 常量 ---------- */
+  const SERVER_IP = 'SCDL.9666.fun:28769';
+
+  /* ---------- 提示条 ---------- */
+  const toastEl = document.getElementById('toast');
+  let toastTimer = null;
+  function showToast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toastEl.classList.remove('show'), 1800);
+  }
+
+  /* ---------- 复制服务器地址（终极完美版） ---------- */
+  function copyIP(){
+    const done = () => showToast('✓ 服务器地址已复制');
+    const fail = () => showToast('复制失败，请手动输入：' + SERVER_IP);
+
+    // 1. 只有在 HTTPS 或 localhost 这种安全环境下，才尝试新 API
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(SERVER_IP).then(done).catch(() => {
+        // 如果新 API 意外失败，直接调用同步的老方法（不经过异步，防止手机丢失点击上下文）
+        legacyCopy(done, fail);
+      });
+    } else {
+      // 2. 如果是 HTTP 局域网或旧手机，直接使用最稳的老方法
+      legacyCopy(done, fail);
+    }
+  }
+
+  // 老方法独立封装，兼容所有设备
+  function legacyCopy(done, fail) {
+    const ta = document.createElement('textarea');
+    ta.value = SERVER_IP;
+    ta.setAttribute('readonly', '');
+    ta.style.cssText = 'position:fixed;top:0;left:-9999px;opacity:0;';
+    document.body.appendChild(ta);
+    
+    ta.focus();
+    ta.select();
+    ta.setSelectionRange(0, ta.value.length);
+
+    try {
+      const successful = document.execCommand('copy');
+      if (successful) {
+        done();
+      } else {
+        fail();
+      }
+    } catch (err) {
+      fail();
+    }
+    document.body.removeChild(ta);
+  }
+
+  /* ---------- 绑定所有复制按钮的点击事件（抢救时补回的代码） ---------- */
+  document.querySelectorAll('[data-copy]').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      copyIP();
+    });
+  });
+
+  /* ---------- 滚动淡入 ---------- */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting){
+        setTimeout(() => entry.target.classList.add('in'), i * 70);
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* ---------- 移动端菜单 ---------- */
+  const menuToggle = document.getElementById('menuToggle');
+  const menu = document.getElementById('menu');
+  menuToggle.addEventListener('click', () => menu.classList.toggle('open'));
+  menu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => menu.classList.remove('open'));
+  });
+
+  /* ---------- 点击 IP 文字也能复制 ---------- */
+  document.getElementById('ipText').addEventListener('click', copyIP);
+  document.getElementById('ipText').style.cursor = 'pointer';
+</script>
+</body>
+</html>
