@@ -257,6 +257,10 @@
     transform:translateY(100%);transition:transform .3s ease;
   }
   .gallery-item:hover::after{transform:translateY(0);}
+  /* 触屏设备（手机/平板）：图片描述始终显示 */
+  @media (hover: none), (max-width: 900px){
+    .gallery-item::after{transform:translateY(0);}
+  }
 
   /* 灯箱 */
   .lightbox{
@@ -276,49 +280,6 @@
     font-size:40px;color:#fff;cursor:pointer;
     font-weight:900;line-height:1;
   }
-
-  /* ============ 留言板 ============ */
-  .message-board{background:var(--bg);}
-  .msg-form{
-    max-width:700px;margin:0 auto 30px;
-    display:flex;flex-direction:column;gap:12px;
-  }
-  .msg-form input,.msg-form textarea{
-    width:100%;padding:12px 16px;
-    background:var(--panel);color:var(--text);
-    border:3px solid var(--line);
-    font:inherit;font-size:14.5px;
-    box-shadow:inset -4px -4px 0 rgba(0,0,0,.28);
-    outline:none;
-  }
-  .msg-form input:focus,.msg-form textarea:focus{
-    border-color:var(--grass);
-  }
-  .msg-form textarea{resize:vertical;min-height:100px;}
-  
-  /* ★ 默认只显示 5 条，不滚动；点击“查看更多”后才加上 .scrollable */
-  .msg-list{
-    max-width:700px;margin:0 auto;
-    display:flex;flex-direction:column;gap:12px;
-  }
-  .msg-list.scrollable{
-    max-height:400px;
-    overflow-y:auto;
-    padding-right:8px;
-  }
-  .msg-more-wrap{
-    text-align:center;
-    margin-top:20px;
-  }
-  
-  .msg-item{
-    background:var(--panel);padding:16px 20px;
-    border:3px solid var(--line);
-    box-shadow:inset -4px -4px 0 rgba(0,0,0,.28);
-  }
-  .msg-item .msg-name{color:var(--grass-light);font-weight:700;font-size:14px;}
-  .msg-item .msg-text{color:#c3cbd8;font-size:14.5px;margin-top:4px;}
-  .msg-empty{text-align:center;color:var(--muted);font-size:14px;padding:20px;}
 
   /* ============ 友站区块 ============ */
   .friends{background:var(--bg);border-top:3px solid var(--line);}
@@ -609,7 +570,6 @@
       <a href="#notice">公告</a>
       <a href="#features">玩法</a>
       <a href="#gallery">画廊</a>
-      <a href="#message">留言</a>
       <a href="#info">服务器</a>
       <a href="#join">加入</a>
       <a href="#rules">规则</a>
@@ -825,30 +785,6 @@
   <span class="lightbox-close">&times;</span>
   <img id="lightboxImg" src="" alt="大图">
 </div>
-
-<!-- ================= 留言板 ================= -->
-<section class="message-board" id="message">
-  <div class="container">
-    <div class="sec-head reveal">
-      <h2 class="sec-title">玩家<span class="accent">留言板</span></h2>
-      <p class="sec-sub">写下你想对服主或大家说的话（保存在你自己的浏览器里）</p>
-    </div>
-
-    <div class="msg-form reveal">
-      <input type="text" id="msgName" placeholder="你的游戏ID（比如：Steve）" maxlength="20">
-      <textarea id="msgText" placeholder="写下你想说的话..." maxlength="200"></textarea>
-      <button class="btn btn-primary" style="align-self:flex-end;" onclick="addMessage()">发表留言</button>
-    </div>
-
-    <div class="msg-list" id="msgList">
-      <div class="msg-empty">还没有留言，来抢个沙发吧！</div>
-    </div>
-
-    <div class="msg-more-wrap" id="msgMoreWrap" style="display:none;">
-      <button class="btn btn-ghost" id="msgMoreBtn" onclick="toggleShowAll()">查看更多</button>
-    </div>
-  </div>
-</section>
 
 <!-- ================= 服务器信息 ================= -->
 <section class="info" id="info">
@@ -1104,90 +1040,6 @@
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') closeLightbox();
   });
-
-  /* ---------- 留言板 (localStorage) ---------- */
-  const STORAGE_KEY = 'scdl_messages';
-  let showAllMessages = false; // ★ 控制是否展开全部留言
-
-  function loadMessages(){
-    const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    const list = document.getElementById('msgList');
-    const moreWrap = document.getElementById('msgMoreWrap');
-    const moreBtn = document.getElementById('msgMoreBtn');
-
-    if (data.length === 0) {
-      list.innerHTML = '<div class="msg-empty">还没有留言，来抢个沙发吧！</div>';
-      list.classList.remove('scrollable');
-      moreWrap.style.display = 'none';
-      return;
-    }
-
-    // ★ 根据展开状态，决定显示 5 条还是全部
-    const displayData = showAllMessages ? data : data.slice(0, 5);
-
-    list.innerHTML = displayData.map(m => `
-      <div class="msg-item">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-          <div class="msg-name">${escapeHTML(m.name)}</div>
-          <button onclick="deleteMessage(${m.time})" style="background:none; border:none; color:#b4534b; cursor:pointer; font-size:12px; font-weight:bold; text-decoration:underline;">删除</button>
-        </div>
-        <div class="msg-text">${escapeHTML(m.text)}</div>
-      </div>
-    `).join('');
-
-    // ★ 更新“查看更多”按钮的状态
-    if (data.length > 5) {
-      moreWrap.style.display = 'block';
-      moreBtn.textContent = showAllMessages ? '收起留言' : `查看更多（还有 ${data.length - 5} 条）`;
-      if (showAllMessages) {
-        list.classList.add('scrollable');
-      } else {
-        list.classList.remove('scrollable');
-      }
-    } else {
-      moreWrap.style.display = 'none';
-      list.classList.remove('scrollable');
-    }
-  }
-
-  // ★ 新增：切换展开/收起
-  function toggleShowAll(){
-    showAllMessages = !showAllMessages;
-    loadMessages();
-  }
-
-  function addMessage(){
-    const nameInput = document.getElementById('msgName');
-    const textInput = document.getElementById('msgText');
-    const name = nameInput.value.trim();
-    const text = textInput.value.trim();
-    if (!name || !text) { showToast('请填写昵称和留言内容'); return; }
-    
-    const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    data.unshift({ name, text, time: Date.now() });
-    if (data.length > 50) data.pop();
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    
-    nameInput.value = '';
-    textInput.value = '';
-    showAllMessages = false; // ★ 发新留言后自动收起
-    loadMessages();
-    showToast('留言成功！');
-  }
-  function deleteMessage(time) {
-    if (!confirm('确定要删除这条留言吗？')) return;
-    let data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    data = data.filter(m => m.time !== time);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    loadMessages();
-    showToast('留言已删除');
-  }
-  function escapeHTML(str){
-    return String(str).replace(/[&<>"']/g, s => ({
-      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-    }[s]));
-  }
-  loadMessages();
 
   /* ---------- 滚动淡入 ---------- */
   const io = new IntersectionObserver((entries) => {
