@@ -230,7 +230,7 @@
   .join{background:var(--bg);}
   .rules{background:#161922;border-top:3px solid var(--line);}
 
-  /* ============ 建筑画廊 (新增) ============ */
+  /* ============ 建筑画廊 ============ */
   .gallery{background:#161922;border-top:3px solid var(--line);border-bottom:3px solid var(--line);}
   .gallery-grid{
     display:grid;
@@ -277,7 +277,7 @@
     font-weight:900;line-height:1;
   }
 
-  /* ============ 留言板 (新增) ============ */
+  /* ============ 留言板 ============ */
   .message-board{background:var(--bg);}
   .msg-form{
     max-width:700px;margin:0 auto 30px;
@@ -560,20 +560,6 @@
     pointer-events:none;
   }
   .toast.show{transform:translate(-50%,0);}
-
-  /* ============ 音乐按钮 (新增) ============ */
-  .music-btn{
-    position:fixed;bottom:20px;right:20px;z-index:998;
-    width:50px;height:50px;border-radius:50%;
-    background:var(--grass);color:#fff;
-    border:3px solid var(--line);
-    box-shadow:inset -4px -4px 0 rgba(0,0,0,.35), 5px 5px 0 rgba(0,0,0,.45);
-    display:flex;align-items:center;justify-content:center;
-    font-size:22px;cursor:pointer;
-    transition:transform .1s;
-  }
-  .music-btn:active{transform:translate(3px,3px);}
-  .music-btn.playing{background:var(--gold);color:#0d0f14;}
 
   /* ============ 响应式 ============ */
   @media (max-width:900px){
@@ -1008,10 +994,6 @@
   </div>
 </footer>
 
-<!-- 背景音乐按钮 (需自己放 music.mp3 文件到网站根目录) -->
-<audio id="bgm" src="music.ogg" loop></audio>
-<div class="music-btn" id="musicBtn" title="播放/暂停背景音乐">🎵</div>
-
 <div class="toast" id="toast">已复制</div>
 
 <script>
@@ -1206,23 +1188,6 @@
     }[s]));
   }
   loadMessages();
-
-  /* ---------- 背景音乐控制 ---------- */
-  const musicBtn = document.getElementById('musicBtn');
-  const bgm = document.getElementById('bgm');
-  let isPlaying = false;
-  musicBtn.addEventListener('click', () => {
-    if (isPlaying) {
-      bgm.pause();
-      musicBtn.classList.remove('playing');
-      musicBtn.textContent = '🎵';
-    } else {
-      bgm.play().catch(() => showToast('音乐加载中或浏览器拦截，请再点一次'));
-      musicBtn.classList.add('playing');
-      musicBtn.textContent = '🔊';
-    }
-    isPlaying = !isPlaying;
-  });
 
   /* ---------- 滚动淡入 ---------- */
   const io = new IntersectionObserver((entries) => {
