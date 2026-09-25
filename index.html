@@ -86,10 +86,10 @@
   }
   .nav-inner{
     width:min(1160px,92vw);margin:0 auto;
-    min-height:72px; /* 原来是 height:72px，改成 min-height 让高度能自动变高 */
+    min-height:72px;
     display:flex;align-items:center;gap:22px;
-    flex-wrap:wrap; /* 加上这句，放不下的时候自动换行 */
-    padding:10px 0; /* 加上下留白，换行的时候不会贴在一起 */
+    flex-wrap:wrap;
+    padding:10px 0;
   }
   .logo{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:2px;font-size:18px;}
   .cube{
@@ -106,7 +106,7 @@
   }
   .menu{
     display:flex;gap:4px;margin-left:auto;
-    flex-wrap:wrap; /* 加上这句，菜单项放不下时自动去下一行 */
+    flex-wrap:wrap;
   }
   .menu a{
     padding:8px 12px;font-size:15px;font-weight:600;color:var(--muted);
@@ -230,6 +230,81 @@
   .join{background:var(--bg);}
   .rules{background:#161922;border-top:3px solid var(--line);}
 
+  /* ============ 建筑画廊 (新增) ============ */
+  .gallery{background:var(--bg);border-top:3px solid var(--line);}
+  .gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+    gap:16px;
+  }
+  .gallery-item{
+    position:relative;overflow:hidden;
+    border:3px solid var(--line);
+    box-shadow:6px 6px 0 rgba(0,0,0,.4);
+    cursor:pointer;aspect-ratio:16/9;
+    background:var(--panel);
+  }
+  .gallery-item img{
+    width:100%;height:100%;object-fit:cover;
+    transition:transform .3s ease;
+  }
+  .gallery-item:hover img{transform:scale(1.08);}
+  .gallery-item::after{
+    content:attr(data-title);
+    position:absolute;bottom:0;left:0;right:0;
+    padding:8px;background:rgba(0,0,0,.75);
+    font-size:14px;font-weight:700;text-align:center;
+    transform:translateY(100%);transition:transform .3s ease;
+  }
+  .gallery-item:hover::after{transform:translateY(0);}
+  
+  /* 灯箱效果 */
+  .lightbox{
+    position:fixed;inset:0;z-index:1000;
+    background:rgba(0,0,0,.92);
+    display:none;align-items:center;justify-content:center;
+    padding:20px;
+  }
+  .lightbox.open{display:flex;}
+  .lightbox img{
+    max-width:90vw;max-height:90vh;
+    border:4px solid var(--line);
+    box-shadow:0 0 40px rgba(0,0,0,.8);
+  }
+  .lightbox-close{
+    position:absolute;top:20px;right:30px;
+    font-size:40px;color:#fff;cursor:pointer;
+    font-weight:900;line-height:1;
+  }
+
+  /* ============ 留言板 (新增) ============ */
+  .message-board{background:#161922;border-top:3px solid var(--line);}
+  .msg-form{
+    max-width:700px;margin:0 auto 30px;
+    display:flex;flex-direction:column;gap:12px;
+  }
+  .msg-form input,.msg-form textarea{
+    width:100%;padding:12px 16px;
+    background:var(--panel);color:var(--text);
+    border:3px solid var(--line);
+    font:inherit;font-size:14.5px;
+    box-shadow:inset -4px -4px 0 rgba(0,0,0,.28);
+    outline:none;
+  }
+  .msg-form input:focus,.msg-form textarea:focus{
+    border-color:var(--grass);
+  }
+  .msg-form textarea{resize:vertical;min-height:100px;}
+  .msg-list{max-width:700px;margin:0 auto;display:flex;flex-direction:column;gap:12px;}
+  .msg-item{
+    background:var(--panel);padding:16px 20px;
+    border:3px solid var(--line);
+    box-shadow:inset -4px -4px 0 rgba(0,0,0,.28);
+  }
+  .msg-item .msg-name{color:var(--grass-light);font-weight:700;font-size:14px;}
+  .msg-item .msg-text{color:#c3cbd8;font-size:14.5px;margin-top:4px;}
+  .msg-empty{text-align:center;color:var(--muted);font-size:14px;padding:20px;}
+
   /* ============ 友站区块 (新增) ============ */
   .friends{background:var(--bg);border-top:3px solid var(--line);}
   .friends-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;}
@@ -255,140 +330,74 @@
     border-bottom:3px solid var(--line);
     position:relative;
   }
-  .notice::before{           /* 顶部木牌装饰条 */
-    content:"";
-    position:absolute;left:0;right:0;top:0;height:10px;
+  .notice::before{
+    content:"";position:absolute;left:0;right:0;top:0;height:10px;
     background:repeating-linear-gradient(90deg,#8b5a2b 0 26px,#7a4e25 26px 52px);
     border-bottom:3px solid var(--line);
   }
-
-  .notice-board{
-    max-width:900px;margin:0 auto;
-    display:grid;gap:16px;
-  }
-
+  .notice-board{max-width:900px;margin:0 auto;display:grid;gap:16px;}
   .notice-item{
     --accent:#6aa84f;
     position:relative;
     padding:22px 26px 22px 32px;
     background:var(--panel);
     border:3px solid var(--line);
-    box-shadow:
-      inset -4px -4px 0 rgba(0,0,0,.28),
-      inset 4px 4px 0 rgba(255,255,255,.05),
-      6px 6px 0 rgba(0,0,0,.4);
+    box-shadow:inset -4px -4px 0 rgba(0,0,0,.28), inset 4px 4px 0 rgba(255,255,255,.05), 6px 6px 0 rgba(0,0,0,.4);
     transition:transform .16s ease, box-shadow .16s ease;
   }
-  .notice-item::before{       /* 左侧彩色条 */
-    content:"";
-    position:absolute;left:0;top:0;bottom:0;width:9px;
+  .notice-item::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:9px;
     background:var(--accent);
     border-right:3px solid var(--line);
     box-shadow:inset -3px 0 0 rgba(0,0,0,.25);
   }
   .notice-item:hover{
     transform:translateY(-4px);
-    box-shadow:
-      inset -4px -4px 0 rgba(0,0,0,.28),
-      inset 4px 4px 0 rgba(255,255,255,.05),
-      6px 10px 0 rgba(0,0,0,.5);
+    box-shadow:inset -4px -4px 0 rgba(0,0,0,.28), inset 4px 4px 0 rgba(255,255,255,.05), 6px 10px 0 rgba(0,0,0,.5);
   }
-  /* 置顶公告：底色稍亮 + 外发光 */
   .notice-item.pinned{
     background:var(--panel2);
-    box-shadow:
-      inset -4px -4px 0 rgba(0,0,0,.28),
-      inset 4px 4px 0 rgba(255,255,255,.07),
-      6px 6px 0 rgba(0,0,0,.45),
-      0 0 0 3px rgba(180,83,75,.18);
+    box-shadow:inset -4px -4px 0 rgba(0,0,0,.28), inset 4px 4px 0 rgba(255,255,255,.07), 6px 6px 0 rgba(0,0,0,.45), 0 0 0 3px rgba(180,83,75,.18);
   }
-
-  .notice-top{
-    display:flex;align-items:center;justify-content:space-between;
-    gap:14px;flex-wrap:wrap;margin-bottom:12px;
-  }
+  .notice-top{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:12px;}
   .notice-tag{
-    display:inline-block;
-    padding:3px 11px;
+    display:inline-block;padding:3px 11px;
     font-size:12px;font-weight:900;letter-spacing:1.5px;
-    color:#fff;
-    border:3px solid var(--line);
+    color:#fff;border:3px solid var(--line);
     box-shadow:inset -3px -3px 0 rgba(0,0,0,.32), inset 3px 3px 0 rgba(255,255,255,.28);
     text-shadow:1px 1px 0 rgba(0,0,0,.45);
   }
-  .tag-pin{background:#b4534b;}       /* 置顶 / 重要 */
-  .tag-update{background:#c9a227;}    /* 更新 / 版本 */
-  .tag-event{background:#2f9ea8;}     /* 活动 */
-  .tag-info{background:#6d7480;}      /* 一般通知 */
-
-  .notice-date{
-    font-family:ui-monospace,Consolas,monospace;
-    font-size:12.5px;letter-spacing:1px;color:var(--muted);
-  }
-  .notice-title{
-    font-size:18px;font-weight:900;letter-spacing:1px;
-    margin-bottom:8px;
-    text-shadow:2px 2px 0 rgba(0,0,0,.6);
-  }
-  .notice-text{
-    font-size:14.5px;color:#b9c2d0;line-height:1.95;
-  }
+  .tag-pin{background:#b4534b;}
+  .tag-update{background:#c9a227;}
+  .tag-event{background:#2f9ea8;}
+  .tag-info{background:#6d7480;}
+  .notice-date{font-family:ui-monospace,Consolas,monospace;font-size:12.5px;letter-spacing:1px;color:var(--muted);}
+  .notice-title{font-size:18px;font-weight:900;letter-spacing:1px;margin-bottom:8px;text-shadow:2px 2px 0 rgba(0,0,0,.6);}
+  .notice-text{font-size:14.5px;color:#b9c2d0;line-height:1.95;}
   .notice-text + .notice-text{margin-top:6px;}
   .notice-text b{color:var(--grass-light);}
   .notice-text .gold{color:var(--gold);}
   .notice-text .cyan{color:var(--diamond);}
-
-  .notice-list{
-    margin:10px 0 0 4px;padding:0;list-style:none;
-    font-size:14.5px;color:#b9c2d0;
-  }
+  .notice-list{margin:10px 0 0 4px;padding:0;list-style:none;font-size:14.5px;color:#b9c2d0;}
   .notice-list li{position:relative;padding-left:20px;line-height:1.9;}
-  .notice-list li::before{
-    content:"■";
-    position:absolute;left:0;top:0;
-    color:var(--accent);font-size:11px;line-height:2.4;
-  }
+  .notice-list li::before{content:"■";position:absolute;left:0;top:0;color:var(--accent);font-size:11px;line-height:2.4;}
 
   /* ============ 特色卡片 ============ */
   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;}
   .card{
-    background:var(--panel);
-    border:3px solid var(--line);
+    background:var(--panel);border:3px solid var(--line);
     box-shadow:inset -4px -4px 0 rgba(0,0,0,.28), inset 4px 4px 0 rgba(255,255,255,.05), 6px 6px 0 rgba(0,0,0,.4);
-    padding:28px 24px;
-    transition:transform .18s ease, box-shadow .18s ease;
+    padding:28px 24px;transition:transform .18s ease, box-shadow .18s ease;
   }
-  .card:hover{
-    transform:translateY(-6px);
-    box-shadow:inset -4px -4px 0 rgba(0,0,0,.28), inset 4px 4px 0 rgba(255,255,255,.05), 6px 12px 0 rgba(0,0,0,.5);
-  }
-  .card-icon{
-    width:46px;height:46px;margin-bottom:16px;
-    display:flex;align-items:center;justify-content:center;
-    font-size:20px;
-    border:3px solid var(--line);
-    box-shadow:inset -4px -4px 0 rgba(0,0,0,.3), inset 4px 4px 0 rgba(255,255,255,.22);
-  }
-  .ic-green{background:#6aa84f;}
-  .ic-gold{background:#c9a227;}
-  .ic-cyan{background:#2f9ea8;}
-  .ic-purple{background:#7d5bb5;}
-  .ic-red{background:#b4534b;}
-  .ic-gray{background:#6d7480;}
+  .card:hover{transform:translateY(-6px);box-shadow:inset -4px -4px 0 rgba(0,0,0,.28), inset 4px 4px 0 rgba(255,255,255,.05), 6px 12px 0 rgba(0,0,0,.5);}
+  .card-icon{width:46px;height:46px;margin-bottom:16px;display:flex;align-items:center;justify-content:center;font-size:20px;border:3px solid var(--line);box-shadow:inset -4px -4px 0 rgba(0,0,0,.3), inset 4px 4px 0 rgba(255,255,255,.22);}
+  .ic-green{background:#6aa84f;}.ic-gold{background:#c9a227;}.ic-cyan{background:#2f9ea8;}.ic-purple{background:#7d5bb5;}.ic-red{background:#b4534b;}.ic-gray{background:#6d7480;}
   .card h3{font-size:18px;font-weight:800;letter-spacing:1px;margin-bottom:8px;}
   .card p{font-size:14.5px;color:var(--muted);}
 
   /* ============ 服务器信息 ============ */
-  .info-grid{
-    display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;
-  }
-  .info-item{
-    display:flex;justify-content:space-between;align-items:center;gap:16px;
-    padding:16px 20px;
-    background:var(--panel);
-    border:3px solid var(--line);
-    box-shadow:inset -4px -4px 0 rgba(0,0,0,.28), inset 4px 4px 0 rgba(255,255,255,.05);
-  }
+  .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;}
+  .info-item{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 20px;background:var(--panel);border:3px solid var(--line);box-shadow:inset -4px -4px 0 rgba(0,0,0,.28), inset 4px 4px 0 rgba(255,255,255,.05);}
   .info-item .k{font-size:14px;color:var(--muted);letter-spacing:.5px;flex:none;}
   .info-item .v{font-weight:700;font-size:14.5px;text-align:right;color:var(--gold);}
   .info-item .v.green{color:var(--grass-light);}
@@ -396,68 +405,24 @@
 
   /* ============ 加入步骤 ============ */
   .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;}
-  .step{
-    position:relative;
-    background:var(--panel);
-    border:3px solid var(--line);
-    box-shadow:inset -4px -4px 0 rgba(0,0,0,.28), inset 4px 4px 0 rgba(255,255,255,.05), 6px 6px 0 rgba(0,0,0,.4);
-    padding:30px 22px 24px;
-    text-align:center;
-  }
-  .step-num{
-    width:48px;height:48px;margin:0 auto 16px;
-    display:flex;align-items:center;justify-content:center;
-    font-size:22px;font-weight:900;
-    background:var(--grass);color:#fff;
-    border:3px solid var(--line);
-    box-shadow:inset -4px -4px 0 rgba(0,0,0,.3), inset 4px 4px 0 rgba(255,255,255,.3);
-    text-shadow:2px 2px 0 rgba(0,0,0,.5);
-  }
+  .step{position:relative;background:var(--panel);border:3px solid var(--line);box-shadow:inset -4px -4px 0 rgba(0,0,0,.28), inset 4px 4px 0 rgba(255,255,255,.05), 6px 6px 0 rgba(0,0,0,.4);padding:30px 22px 24px;text-align:center;}
+  .step-num{width:48px;height:48px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;background:var(--grass);color:#fff;border:3px solid var(--line);box-shadow:inset -4px -4px 0 rgba(0,0,0,.3), inset 4px 4px 0 rgba(255,255,255,.3);text-shadow:2px 2px 0 rgba(0,0,0,.5);}
   .step h3{font-size:17px;font-weight:800;letter-spacing:1px;margin-bottom:8px;}
   .step p{font-size:14px;color:var(--muted);}
-  .step code{
-    font-family:ui-monospace,Consolas,monospace;
-    color:var(--gold);font-size:13.5px;
-    background:rgba(0,0,0,.4);padding:1px 6px;border-radius:2px;
-  }
+  .step code{font-family:ui-monospace,Consolas,monospace;color:var(--gold);font-size:13.5px;background:rgba(0,0,0,.4);padding:1px 6px;border-radius:2px;}
 
   /* ============ 规则 ============ */
   .rules-list{display:grid;gap:12px;max-width:860px;margin:0 auto;}
-  .rule{
-    display:flex;gap:16px;align-items:flex-start;
-    padding:16px 20px;
-    background:var(--panel);
-    border:3px solid var(--line);
-    box-shadow:inset -4px -4px 0 rgba(0,0,0,.28), inset 4px 4px 0 rgba(255,255,255,.05);
-  }
-  .rule-idx{
-    flex:none;width:30px;height:30px;margin-top:2px;
-    display:flex;align-items:center;justify-content:center;
-    font-size:14px;font-weight:900;color:#fff;
-    background:#b4534b;
-    border:3px solid var(--line);
-    box-shadow:inset -3px -3px 0 rgba(0,0,0,.3), inset 3px 3px 0 rgba(255,255,255,.25);
-  }
+  .rule{display:flex;gap:16px;align-items:flex-start;padding:16px 20px;background:var(--panel);border:3px solid var(--line);box-shadow:inset -4px -4px 0 rgba(0,0,0,.28), inset 4px 4px 0 rgba(255,255,255,.05);}
+  .rule-idx{flex:none;width:30px;height:30px;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#fff;background:#b4534b;border:3px solid var(--line);box-shadow:inset -3px -3px 0 rgba(0,0,0,.3), inset 3px 3px 0 rgba(255,255,255,.25);}
   .rule p{font-size:14.5px;color:#c3cbd8;}
 
   /* ============ 页脚 ============ */
-  footer{
-    background:#0d0f14;
-    border-top:3px solid var(--line);
-    padding:56px 0 40px;
-    text-align:center;
-  }
-  .foot-logo{
-    display:inline-flex;align-items:center;gap:12px;
-    font-size:20px;font-weight:900;letter-spacing:3px;margin-bottom:16px;
-  }
+  footer{background:#0d0f14;border-top:3px solid var(--line);padding:56px 0 40px;text-align:center;}
+  .foot-logo{display:inline-flex;align-items:center;gap:12px;font-size:20px;font-weight:900;letter-spacing:3px;margin-bottom:16px;}
   footer .desc{color:var(--muted);font-size:14px;max-width:620px;margin:0 auto 22px;}
   .foot-links{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:26px;}
-  .foot-links a{
-    padding:8px 16px;font-size:14px;color:var(--muted);
-    border:3px solid var(--line);background:var(--panel);
-    transition:.15s;
-  }
+  .foot-links a{padding:8px 16px;font-size:14px;color:var(--muted);border:3px solid var(--line);background:var(--panel);transition:.15s;}
   .foot-links a:hover{color:#fff;background:var(--panel2);}
   .copyright{color:#5f6878;font-size:12.5px;line-height:2;}
 
@@ -474,23 +439,35 @@
   }
   .toast.show{transform:translate(-50%,0);}
 
+  /* ============ 音乐按钮 (新增) ============ */
+  .music-btn{
+    position:fixed;bottom:20px;right:20px;z-index:998;
+    width:50px;height:50px;border-radius:50%;
+    background:var(--grass);color:#fff;
+    border:3px solid var(--line);
+    box-shadow:inset -4px -4px 0 rgba(0,0,0,.35), 5px 5px 0 rgba(0,0,0,.45);
+    display:flex;align-items:center;justify-content:center;
+    font-size:22px;cursor:pointer;
+    transition:transform .1s;
+  }
+  .music-btn:active{transform:translate(3px,3px);}
+  .music-btn.playing{background:var(--gold);color:#0d0f14;}
+
   /* ============ 响应式 ============ */
   @media (max-width:900px){
     .menu{
-      position:absolute; /* 👈 改成 absolute，让它贴着导航栏底部 */
-      top:100%;          /* 👈 改成 100%，意思是“在导航栏最底部往下弹” */
+      position:absolute;
+      top:100%;
       left:0;right:0;
       flex-direction:column;gap:0;
       background:rgba(18,20,26,.98);
       border-bottom:3px solid var(--line);
       padding:10px 5vw 18px;
       display:none;
-      /* 加上刚才说的滑动魔法 */
-      max-height:calc(100vh - 72px); 
-      overflow-y:auto; 
+      max-height:calc(100vh - 72px);
+      overflow-y:auto;
     }
     .menu.open{display:flex;}
-    
     .menu a{padding:14px 12px;border-bottom:2px solid rgba(255,255,255,.06);}
     .menu-toggle{display:inline-flex;margin-left:auto;}
     .nav-cta .btn-copy-nav{display:none;}
@@ -502,6 +479,7 @@
     .stat{min-width:104px;padding:12px 14px;}
     .stat .num{font-size:20px;}
     .notice-item{padding:20px 18px 20px 26px;}
+    .gallery-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));}
   }
   @media (max-width:420px){
     .logo-text{display:none;}
@@ -525,12 +503,13 @@
       <a href="#info">服务器</a>
       <a href="#join">加入</a>
       <a href="#rules">规则</a>
-      <a href="#friends">友站</a> <!-- 新增友站菜单 -->
+      <a href="#gallery">画廊</a> <!-- 新增画廊 -->
+      <a href="#message">留言</a> <!-- 新增留言 -->
+      <a href="#friends">友站</a>
     </nav>
 
     <div class="nav-cta">
       <button class="btn btn-primary btn-sm btn-copy-nav" data-copy>复制 IP</button>
-      <!-- 导航栏回到顶部按钮 (新增) -->
       <a href="#home" class="btn btn-sm" title="回到顶部">↑ 顶部</a>
       <button class="btn btn-sm menu-toggle" id="menuToggle" aria-label="菜单">☰</button>
     </div>
@@ -707,6 +686,58 @@
   </div>
 </section>
 
+<!-- ================= 建筑画廊 (新增) ================= -->
+<section class="gallery" id="gallery">
+  <div class="container">
+    <div class="sec-head reveal">
+      <h2 class="sec-title">建筑<span class="accent">画廊</span></h2>
+      <p class="sec-sub">来自玩家们的奇思妙想，点击放大查看</p>
+    </div>
+    
+    <div class="gallery-grid reveal">
+      <!-- 
+        ★ 如何添加图片？
+        把你的建筑截图放进 images 文件夹，然后复制下面这行，修改图片名称和标题即可。
+      -->
+      <div class="gallery-item" data-title="玩家的城堡" onclick="openLightbox('images/1.jpg')">
+        <img src="images/1.jpg" alt="玩家的城堡">
+      </div>
+      <div class="gallery-item" data-title="精妙红石机器" onclick="openLightbox('images/2.jpg')">
+        <img src="images/2.jpg" alt="精妙红石机器">
+      </div>
+      <div class="gallery-item" data-title="出生点全景" onclick="openLightbox('images/3.jpg')">
+        <img src="images/3.jpg" alt="出生点全景">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 灯箱 (点击图片放大的遮罩层) -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close">&times;</span>
+  <img id="lightboxImg" src="" alt="大图">
+</div>
+
+<!-- ================= 留言板 (新增) ================= -->
+<section class="message-board" id="message">
+  <div class="container">
+    <div class="sec-head reveal">
+      <h2 class="sec-title">玩家<span class="accent">留言板</span></h2>
+      <p class="sec-sub">写下你想对服主或大家说的话（保存在你自己的浏览器里）</p>
+    </div>
+
+    <div class="msg-form reveal">
+      <input type="text" id="msgName" placeholder="你的游戏ID（比如：beishaoxia）" maxlength="20">
+      <textarea id="msgText" placeholder="写下你想说的话..." maxlength="200"></textarea>
+      <button class="btn btn-primary" style="align-self:flex-end;" onclick="addMessage()">发表留言</button>
+    </div>
+
+    <div class="msg-list" id="msgList">
+      <div class="msg-empty">还没有留言，来抢个沙发吧！</div>
+    </div>
+  </div>
+</section>
+
 <!-- ================= 服务器信息 ================= -->
 <section class="info" id="info">
   <div class="container">
@@ -800,7 +831,7 @@
   </div>
 </section>
 
-<!-- ================= 友站区块 (新增) ================= -->
+<!-- ================= 友站区块 ================= -->
 <section class="friends" id="friends">
   <div class="container">
     <div class="sec-head reveal">
@@ -809,11 +840,6 @@
     </div>
     
     <div class="friends-grid reveal">
-      <!-- 
-        ★ 如何添加友站？
-        复制下面这行 <a> 标签，修改里面的链接和文字即可。
-        target="_blank" 表示在新窗口打开。
-      -->
       <a href="https://dbcj.top" class="friend-card" target="_blank">DBCJ官网</a>
       <a href="https://news.dbcj.top" class="friend-card" target="_blank">DBCJ新闻网</a>
       <a href="https://qm.qq.com/q/rcSMTvFZAc" class="friend-card" target="_blank">DBCJ 1群</a>
@@ -839,11 +865,9 @@
       <a href="#notice">公告</a>
       <a href="#features">玩法</a>
       <a href="#join">加入</a>
-      <!-- 在这里只增加了“规则”和“友站”，没有删减任何原有代码 -->
       <a href="#rules">规则</a>
       <a href="#friends">友站</a>
       <a href="#" data-copy>复制 IP</a>
-      <!-- 页脚回到顶部按钮 (新增) -->
       <a href="#home">↑ 顶部</a>
     </div>
 
@@ -854,6 +878,10 @@
     </p>
   </div>
 </footer>
+
+<!-- 背景音乐按钮 (需自己放 music.mp3 文件到网站根目录) -->
+<audio id="bgm" src="music.mp3" loop></audio>
+<div class="music-btn" id="musicBtn" title="播放/暂停背景音乐">🎵</div>
 
 <div class="toast" id="toast">已复制</div>
 
@@ -871,54 +899,158 @@
     toastTimer = setTimeout(() => toastEl.classList.remove('show'), 1800);
   }
 
-  /* ---------- 复制服务器地址（终极完美版） ---------- */
+  /* ---------- 复制成功提示音 (Web Audio API 生成叮声) ---------- */
+  function playDing(){
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(880, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(1760, ctx.currentTime + 0.1);
+      gain.gain.setValueAtTime(0.2, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+      osc.start(); osc.stop(ctx.currentTime + 0.3);
+    } catch(e) { /* 忽略不支持的浏览器 */ }
+  }
+
+  /* ---------- 复制服务器地址 ---------- */
   function copyIP(){
-    const done = () => showToast('✓ 服务器地址已复制');
+    const done = () => { showToast('✓ 服务器地址已复制'); playDing(); };
     const fail = () => showToast('复制失败，请手动输入：' + SERVER_IP);
 
-    // 1. 只有在 HTTPS 或 localhost 这种安全环境下，才尝试新 API
     if (navigator.clipboard && window.isSecureContext) {
       navigator.clipboard.writeText(SERVER_IP).then(done).catch(() => {
-        // 如果新 API 意外失败，直接调用同步的老方法（不经过异步，防止手机丢失点击上下文）
         legacyCopy(done, fail);
       });
     } else {
-      // 2. 如果是 HTTP 局域网或旧手机，直接使用最稳的老方法
       legacyCopy(done, fail);
     }
   }
 
-  // 老方法独立封装，兼容所有设备
   function legacyCopy(done, fail) {
     const ta = document.createElement('textarea');
     ta.value = SERVER_IP;
     ta.setAttribute('readonly', '');
     ta.style.cssText = 'position:fixed;top:0;left:-9999px;opacity:0;';
     document.body.appendChild(ta);
-    
-    ta.focus();
-    ta.select();
-    ta.setSelectionRange(0, ta.value.length);
-
+    ta.focus(); ta.select(); ta.setSelectionRange(0, ta.value.length);
     try {
       const successful = document.execCommand('copy');
-      if (successful) {
-        done();
-      } else {
-        fail();
-      }
-    } catch (err) {
-      fail();
-    }
+      if (successful) done(); else fail();
+    } catch (err) { fail(); }
     document.body.removeChild(ta);
   }
 
-  /* ---------- 绑定所有复制按钮的点击事件（抢救时补回的代码） ---------- */
   document.querySelectorAll('[data-copy]').forEach(btn => {
     btn.addEventListener('click', e => {
       e.preventDefault();
       copyIP();
     });
+  });
+
+  /* ---------- 鼠标点击特效 (像素小方块) ---------- */
+  document.addEventListener('click', function(e){
+    // 避免点击链接/按钮时过度特效遮挡
+    if (e.target.closest('.btn') || e.target.closest('a')) return;
+
+    const colors = ['#6aa84f', '#ffcc33', '#4dd8e6', '#b4534b', '#7d5bb5'];
+    for (let i = 0; i < 6; i++) {
+      const particle = document.createElement('div');
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      particle.style.cssText = `
+        position:fixed; pointer-events:none; z-index:9999;
+        left:${e.clientX}px; top:${e.clientY}px;
+        width:8px; height:8px; background:${color};
+        border:2px solid #0b0d12;
+        transition:transform .6s ease-out, opacity .6s ease-out;
+      `;
+      document.body.appendChild(particle);
+      
+      const angle = Math.random() * Math.PI * 2;
+      const distance = 30 + Math.random() * 60;
+      const tx = Math.cos(angle) * distance;
+      const ty = Math.sin(angle) * distance;
+
+      requestAnimationFrame(() => {
+        particle.style.transform = `translate(${tx}px, ${ty}px) rotate(${Math.random()*360}deg)`;
+        particle.style.opacity = '0';
+      });
+
+      setTimeout(() => particle.remove(), 700);
+    }
+  });
+
+  /* ---------- 建筑画廊灯箱 ---------- */
+  function openLightbox(src){
+    const lb = document.getElementById('lightbox');
+    document.getElementById('lightboxImg').src = src;
+    lb.classList.add('open');
+  }
+  function closeLightbox(){
+    document.getElementById('lightbox').classList.remove('open');
+  }
+  // 按 Esc 关闭灯箱
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+  /* ---------- 留言板 (localStorage) ---------- */
+  const STORAGE_KEY = 'scdl_messages';
+  function loadMessages(){
+    const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    const list = document.getElementById('msgList');
+    if (data.length === 0) {
+      list.innerHTML = '<div class="msg-empty">还没有留言，来抢个沙发吧！</div>';
+      return;
+    }
+    list.innerHTML = data.map(m => `
+      <div class="msg-item">
+        <div class="msg-name">${escapeHTML(m.name)}</div>
+        <div class="msg-text">${escapeHTML(m.text)}</div>
+      </div>
+    `).join('');
+  }
+  function addMessage(){
+    const nameInput = document.getElementById('msgName');
+    const textInput = document.getElementById('msgText');
+    const name = nameInput.value.trim();
+    const text = textInput.value.trim();
+    if (!name || !text) { showToast('请填写昵称和留言内容'); return; }
+    
+    const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    data.unshift({ name, text, time: Date.now() });
+    if (data.length > 50) data.pop(); // 最多存50条
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    
+    nameInput.value = '';
+    textInput.value = '';
+    loadMessages();
+    showToast('留言成功！');
+  }
+  function escapeHTML(str){
+    return String(str).replace(/[&<>"']/g, s => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    }[s]));
+  }
+  loadMessages();
+
+  /* ---------- 背景音乐控制 ---------- */
+  const musicBtn = document.getElementById('musicBtn');
+  const bgm = document.getElementById('bgm');
+  let isPlaying = false;
+  musicBtn.addEventListener('click', () => {
+    if (isPlaying) {
+      bgm.pause();
+      musicBtn.classList.remove('playing');
+      musicBtn.textContent = '🎵';
+    } else {
+      bgm.play().catch(() => showToast('请把 music.mp3 放在网站根目录'));
+      musicBtn.classList.add('playing');
+      musicBtn.textContent = '🔊';
+    }
+    isPlaying = !isPlaying;
   });
 
   /* ---------- 滚动淡入 ---------- */
