@@ -86,7 +86,10 @@
   }
   .nav-inner{
     width:min(1160px,92vw);margin:0 auto;
-    height:72px;display:flex;align-items:center;gap:22px;
+    min-height:72px; /* 原来是 height:72px，改成 min-height 让高度能自动变高 */
+    display:flex;align-items:center;gap:22px;
+    flex-wrap:wrap; /* 加上这句，放不下的时候自动换行 */
+    padding:10px 0; /* 加上下留白，换行的时候不会贴在一起 */
   }
   .logo{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:2px;font-size:18px;}
   .cube{
@@ -101,7 +104,10 @@
     border-bottom:3px solid var(--line);
     box-shadow:inset -4px -4px 0 rgba(0,0,0,.2), inset 4px 4px 0 rgba(255,255,255,.28);
   }
-  .menu{display:flex;gap:4px;margin-left:auto;}
+  .menu{
+    display:flex;gap:4px;margin-left:auto;
+    flex-wrap:wrap; /* 加上这句，菜单项放不下时自动去下一行 */
+  }
   .menu a{
     padding:8px 12px;font-size:15px;font-weight:600;color:var(--muted);
     border:3px solid transparent;transition:.15s;
@@ -471,14 +477,20 @@
   /* ============ 响应式 ============ */
   @media (max-width:900px){
     .menu{
-      position:fixed;top:72px;left:0;right:0;
+      position:absolute; /* 👈 改成 absolute，让它贴着导航栏底部 */
+      top:100%;          /* 👈 改成 100%，意思是“在导航栏最底部往下弹” */
+      left:0;right:0;
       flex-direction:column;gap:0;
       background:rgba(18,20,26,.98);
       border-bottom:3px solid var(--line);
       padding:10px 5vw 18px;
       display:none;
+      /* 加上刚才说的滑动魔法 */
+      max-height:calc(100vh - 72px); 
+      overflow-y:auto; 
     }
     .menu.open{display:flex;}
+    
     .menu a{padding:14px 12px;border-bottom:2px solid rgba(255,255,255,.06);}
     .menu-toggle{display:inline-flex;margin-left:auto;}
     .nav-cta .btn-copy-nav{display:none;}
