@@ -224,6 +224,24 @@
   .join{background:var(--bg);}
   .rules{background:#161922;border-top:3px solid var(--line);}
 
+  /* ============ 友站区块 (新增) ============ */
+  .friends{background:var(--bg);border-top:3px solid var(--line);}
+  .friends-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;}
+  .friend-card{
+    padding:14px 28px;
+    background:var(--panel);
+    border:3px solid var(--line);
+    box-shadow:inset -4px -4px 0 rgba(0,0,0,.28), inset 4px 4px 0 rgba(255,255,255,.05), 6px 6px 0 rgba(0,0,0,.4);
+    transition:transform .18s ease, box-shadow .18s ease;
+    font-weight:700;font-size:16px;letter-spacing:1px;
+    display:inline-block;
+  }
+  .friend-card:hover{
+    transform:translateY(-6px);
+    box-shadow:inset -4px -4px 0 rgba(0,0,0,.28), inset 4px 4px 0 rgba(255,255,255,.05), 6px 12px 0 rgba(0,0,0,.5);
+    color:var(--grass-light);
+  }
+
   /* ============ 公告栏 ============ */
   .notice{
     background:#161922;
@@ -495,10 +513,13 @@
       <a href="#info">服务器</a>
       <a href="#join">加入</a>
       <a href="#rules">规则</a>
+      <a href="#friends">友站</a> <!-- 新增友站菜单 -->
     </nav>
 
     <div class="nav-cta">
       <button class="btn btn-primary btn-sm btn-copy-nav" data-copy>复制 IP</button>
+      <!-- 导航栏回到顶部按钮 (新增) -->
+      <a href="#home" class="btn btn-sm" title="回到顶部">↑ 顶部</a>
       <button class="btn btn-sm menu-toggle" id="menuToggle" aria-label="菜单">☰</button>
     </div>
   </div>
@@ -767,6 +788,27 @@
   </div>
 </section>
 
+<!-- ================= 友站区块 (新增) ================= -->
+<section class="friends" id="friends">
+  <div class="container">
+    <div class="sec-head reveal">
+      <h2 class="sec-title">友站<span class="accent">链接</span></h2>
+      <p class="sec-sub">欢迎互换友链，一起交流开服经验</p>
+    </div>
+    
+    <div class="friends-grid reveal">
+      <!-- 
+        ★ 如何添加友站？
+        复制下面这行 <a> 标签，修改里面的链接和文字即可。
+        target="_blank" 表示在新窗口打开。
+      -->
+      <a href="https://example.com" class="friend-card" target="_blank">友站名称 A</a>
+      <a href="https://example.com" class="friend-card" target="_blank">友站名称 B</a>
+      <a href="https://example.com" class="friend-card" target="_blank">友站名称 C</a>
+    </div>
+  </div>
+</section>
+
 <!-- ================= 页脚 ================= -->
 <footer id="contact">
   <div class="container">
@@ -782,6 +824,8 @@
       <a href="#features">玩法</a>
       <a href="#join">加入</a>
       <a href="#" data-copy>复制 IP</a>
+      <!-- 页脚回到顶部按钮 (新增) -->
+      <a href="#home">↑ 顶部</a>
     </div>
 
     <p class="copyright">
