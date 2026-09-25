@@ -295,7 +295,22 @@
     border-color:var(--grass);
   }
   .msg-form textarea{resize:vertical;min-height:100px;}
-  .msg-list{max-width:700px;margin:0 auto;display:flex;flex-direction:column;gap:12px;}
+  
+  /* ★ 默认只显示 5 条，不滚动；点击“查看更多”后才加上 .scrollable */
+  .msg-list{
+    max-width:700px;margin:0 auto;
+    display:flex;flex-direction:column;gap:12px;
+  }
+  .msg-list.scrollable{
+    max-height:400px;
+    overflow-y:auto;
+    padding-right:8px;
+  }
+  .msg-more-wrap{
+    text-align:center;
+    margin-top:20px;
+  }
+  
   .msg-item{
     background:var(--panel);padding:16px 20px;
     border:3px solid var(--line);
@@ -603,7 +618,6 @@
       <span class="logo-text">生存大陆</span>
     </a>
 
-    <!-- 新增了 画廊 和 留言 菜单 -->
     <nav class="menu" id="menu">
       <a href="#home">首页</a>
       <a href="#notice">公告</a>
@@ -843,6 +857,10 @@
     <div class="msg-list" id="msgList">
       <div class="msg-empty">还没有留言，来抢个沙发吧！</div>
     </div>
+
+    <div class="msg-more-wrap" id="msgMoreWrap" style="display:none;">
+      <button class="btn btn-ghost" id="msgMoreBtn" onclick="toggleShowAll()">查看更多</button>
+    </div>
   </div>
 </section>
 
@@ -968,7 +986,6 @@
     </div>
     <p class="desc">一个由玩家自己维护的 Minecraft 生存服务器，没有充值，没有 VIP，只有一群喜欢方块的人。</p>
 
-    <!-- 底部链接对应顶部导航 -->
     <div class="foot-links">
       <a href="#home">首页</a>
       <a href="#notice">公告</a>
@@ -1108,15 +1125,25 @@
 
   /* ---------- 留言板 (localStorage) ---------- */
   const STORAGE_KEY = 'scdl_messages';
+  let showAllMessages = false; // ★ 控制是否展开全部留言
+
   function loadMessages(){
     const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
     const list = document.getElementById('msgList');
+    const moreWrap = document.getElementById('msgMoreWrap');
+    const moreBtn = document.getElementById('msgMoreBtn');
+
     if (data.length === 0) {
       list.innerHTML = '<div class="msg-empty">还没有留言，来抢个沙发吧！</div>';
+      list.classList.remove('scrollable');
+      moreWrap.style.display = 'none';
       return;
     }
-    // 添加了删除按钮
-    list.innerHTML = data.map(m => `
+
+    // ★ 根据展开状态，决定显示 5 条还是全部
+    const displayData = showAllMessages ? data : data.slice(0, 5);
+
+    list.innerHTML = displayData.map(m => `
       <div class="msg-item">
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <div class="msg-name">${escapeHTML(m.name)}</div>
@@ -1125,7 +1152,28 @@
         <div class="msg-text">${escapeHTML(m.text)}</div>
       </div>
     `).join('');
+
+    // ★ 更新“查看更多”按钮的状态
+    if (data.length > 5) {
+      moreWrap.style.display = 'block';
+      moreBtn.textContent = showAllMessages ? '收起留言' : `查看更多（还有 ${data.length - 5} 条）`;
+      if (showAllMessages) {
+        list.classList.add('scrollable');
+      } else {
+        list.classList.remove('scrollable');
+      }
+    } else {
+      moreWrap.style.display = 'none';
+      list.classList.remove('scrollable');
+    }
   }
+
+  // ★ 新增：切换展开/收起
+  function toggleShowAll(){
+    showAllMessages = !showAllMessages;
+    loadMessages();
+  }
+
   function addMessage(){
     const nameInput = document.getElementById('msgName');
     const textInput = document.getElementById('msgText');
@@ -1140,6 +1188,7 @@
     
     nameInput.value = '';
     textInput.value = '';
+    showAllMessages = false; // ★ 发新留言后自动收起
     loadMessages();
     showToast('留言成功！');
   }
