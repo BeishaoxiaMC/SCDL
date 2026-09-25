@@ -231,7 +231,7 @@
   .rules{background:#161922;border-top:3px solid var(--line);}
 
   /* ============ 建筑画廊 (新增) ============ */
-  .gallery{background:var(--bg);border-top:3px solid var(--line);}
+  .gallery{background:#161922;border-top:3px solid var(--line);border-bottom:3px solid var(--line);}
   .gallery-grid{
     display:grid;
     grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
@@ -257,8 +257,8 @@
     transform:translateY(100%);transition:transform .3s ease;
   }
   .gallery-item:hover::after{transform:translateY(0);}
-  
-  /* 灯箱效果 */
+
+  /* 灯箱 */
   .lightbox{
     position:fixed;inset:0;z-index:1000;
     background:rgba(0,0,0,.92);
@@ -278,7 +278,7 @@
   }
 
   /* ============ 留言板 (新增) ============ */
-  .message-board{background:#161922;border-top:3px solid var(--line);}
+  .message-board{background:var(--bg);}
   .msg-form{
     max-width:700px;margin:0 auto 30px;
     display:flex;flex-direction:column;gap:12px;
@@ -305,7 +305,7 @@
   .msg-item .msg-text{color:#c3cbd8;font-size:14.5px;margin-top:4px;}
   .msg-empty{text-align:center;color:var(--muted);font-size:14px;padding:20px;}
 
-  /* ============ 友站区块 (新增) ============ */
+  /* ============ 友站区块 ============ */
   .friends{background:var(--bg);border-top:3px solid var(--line);}
   .friends-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;}
   .friend-card{
@@ -335,14 +335,22 @@
     background:repeating-linear-gradient(90deg,#8b5a2b 0 26px,#7a4e25 26px 52px);
     border-bottom:3px solid var(--line);
   }
-  .notice-board{max-width:900px;margin:0 auto;display:grid;gap:16px;}
+
+  .notice-board{
+    max-width:900px;margin:0 auto;
+    display:grid;gap:16px;
+  }
+
   .notice-item{
     --accent:#6aa84f;
     position:relative;
     padding:22px 26px 22px 32px;
     background:var(--panel);
     border:3px solid var(--line);
-    box-shadow:inset -4px -4px 0 rgba(0,0,0,.28), inset 4px 4px 0 rgba(255,255,255,.05), 6px 6px 0 rgba(0,0,0,.4);
+    box-shadow:
+      inset -4px -4px 0 rgba(0,0,0,.28),
+      inset 4px 4px 0 rgba(255,255,255,.05),
+      6px 6px 0 rgba(0,0,0,.4);
     transition:transform .16s ease, box-shadow .16s ease;
   }
   .notice-item::before{
@@ -353,17 +361,30 @@
   }
   .notice-item:hover{
     transform:translateY(-4px);
-    box-shadow:inset -4px -4px 0 rgba(0,0,0,.28), inset 4px 4px 0 rgba(255,255,255,.05), 6px 10px 0 rgba(0,0,0,.5);
+    box-shadow:
+      inset -4px -4px 0 rgba(0,0,0,.28),
+      inset 4px 4px 0 rgba(255,255,255,.05),
+      6px 10px 0 rgba(0,0,0,.5);
   }
   .notice-item.pinned{
     background:var(--panel2);
-    box-shadow:inset -4px -4px 0 rgba(0,0,0,.28), inset 4px 4px 0 rgba(255,255,255,.07), 6px 6px 0 rgba(0,0,0,.45), 0 0 0 3px rgba(180,83,75,.18);
+    box-shadow:
+      inset -4px -4px 0 rgba(0,0,0,.28),
+      inset 4px 4px 0 rgba(255,255,255,.07),
+      6px 6px 0 rgba(0,0,0,.45),
+      0 0 0 3px rgba(180,83,75,.18);
   }
-  .notice-top{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:12px;}
+
+  .notice-top{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:14px;flex-wrap:wrap;margin-bottom:12px;
+  }
   .notice-tag{
-    display:inline-block;padding:3px 11px;
+    display:inline-block;
+    padding:3px 11px;
     font-size:12px;font-weight:900;letter-spacing:1.5px;
-    color:#fff;border:3px solid var(--line);
+    color:#fff;
+    border:3px solid var(--line);
     box-shadow:inset -3px -3px 0 rgba(0,0,0,.32), inset 3px 3px 0 rgba(255,255,255,.28);
     text-shadow:1px 1px 0 rgba(0,0,0,.45);
   }
@@ -371,33 +392,75 @@
   .tag-update{background:#c9a227;}
   .tag-event{background:#2f9ea8;}
   .tag-info{background:#6d7480;}
-  .notice-date{font-family:ui-monospace,Consolas,monospace;font-size:12.5px;letter-spacing:1px;color:var(--muted);}
-  .notice-title{font-size:18px;font-weight:900;letter-spacing:1px;margin-bottom:8px;text-shadow:2px 2px 0 rgba(0,0,0,.6);}
-  .notice-text{font-size:14.5px;color:#b9c2d0;line-height:1.95;}
+
+  .notice-date{
+    font-family:ui-monospace,Consolas,monospace;
+    font-size:12.5px;letter-spacing:1px;color:var(--muted);
+  }
+  .notice-title{
+    font-size:18px;font-weight:900;letter-spacing:1px;
+    margin-bottom:8px;
+    text-shadow:2px 2px 0 rgba(0,0,0,.6);
+  }
+  .notice-text{
+    font-size:14.5px;color:#b9c2d0;line-height:1.95;
+  }
   .notice-text + .notice-text{margin-top:6px;}
   .notice-text b{color:var(--grass-light);}
   .notice-text .gold{color:var(--gold);}
   .notice-text .cyan{color:var(--diamond);}
-  .notice-list{margin:10px 0 0 4px;padding:0;list-style:none;font-size:14.5px;color:#b9c2d0;}
+
+  .notice-list{
+    margin:10px 0 0 4px;padding:0;list-style:none;
+    font-size:14.5px;color:#b9c2d0;
+  }
   .notice-list li{position:relative;padding-left:20px;line-height:1.9;}
-  .notice-list li::before{content:"■";position:absolute;left:0;top:0;color:var(--accent);font-size:11px;line-height:2.4;}
+  .notice-list li::before{
+    content:"■";
+    position:absolute;left:0;top:0;
+    color:var(--accent);font-size:11px;line-height:2.4;
+  }
 
   /* ============ 特色卡片 ============ */
   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;}
   .card{
-    background:var(--panel);border:3px solid var(--line);
+    background:var(--panel);
+    border:3px solid var(--line);
     box-shadow:inset -4px -4px 0 rgba(0,0,0,.28), inset 4px 4px 0 rgba(255,255,255,.05), 6px 6px 0 rgba(0,0,0,.4);
-    padding:28px 24px;transition:transform .18s ease, box-shadow .18s ease;
+    padding:28px 24px;
+    transition:transform .18s ease, box-shadow .18s ease;
   }
-  .card:hover{transform:translateY(-6px);box-shadow:inset -4px -4px 0 rgba(0,0,0,.28), inset 4px 4px 0 rgba(255,255,255,.05), 6px 12px 0 rgba(0,0,0,.5);}
-  .card-icon{width:46px;height:46px;margin-bottom:16px;display:flex;align-items:center;justify-content:center;font-size:20px;border:3px solid var(--line);box-shadow:inset -4px -4px 0 rgba(0,0,0,.3), inset 4px 4px 0 rgba(255,255,255,.22);}
-  .ic-green{background:#6aa84f;}.ic-gold{background:#c9a227;}.ic-cyan{background:#2f9ea8;}.ic-purple{background:#7d5bb5;}.ic-red{background:#b4534b;}.ic-gray{background:#6d7480;}
+  .card:hover{
+    transform:translateY(-6px);
+    box-shadow:inset -4px -4px 0 rgba(0,0,0,.28), inset 4px 4px 0 rgba(255,255,255,.05), 6px 12px 0 rgba(0,0,0,.5);
+  }
+  .card-icon{
+    width:46px;height:46px;margin-bottom:16px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:20px;
+    border:3px solid var(--line);
+    box-shadow:inset -4px -4px 0 rgba(0,0,0,.3), inset 4px 4px 0 rgba(255,255,255,.22);
+  }
+  .ic-green{background:#6aa84f;}
+  .ic-gold{background:#c9a227;}
+  .ic-cyan{background:#2f9ea8;}
+  .ic-purple{background:#7d5bb5;}
+  .ic-red{background:#b4534b;}
+  .ic-gray{background:#6d7480;}
   .card h3{font-size:18px;font-weight:800;letter-spacing:1px;margin-bottom:8px;}
   .card p{font-size:14.5px;color:var(--muted);}
 
   /* ============ 服务器信息 ============ */
-  .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;}
-  .info-item{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 20px;background:var(--panel);border:3px solid var(--line);box-shadow:inset -4px -4px 0 rgba(0,0,0,.28), inset 4px 4px 0 rgba(255,255,255,.05);}
+  .info-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;
+  }
+  .info-item{
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+    padding:16px 20px;
+    background:var(--panel);
+    border:3px solid var(--line);
+    box-shadow:inset -4px -4px 0 rgba(0,0,0,.28), inset 4px 4px 0 rgba(255,255,255,.05);
+  }
   .info-item .k{font-size:14px;color:var(--muted);letter-spacing:.5px;flex:none;}
   .info-item .v{font-weight:700;font-size:14.5px;text-align:right;color:var(--gold);}
   .info-item .v.green{color:var(--grass-light);}
@@ -405,24 +468,68 @@
 
   /* ============ 加入步骤 ============ */
   .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:22px;}
-  .step{position:relative;background:var(--panel);border:3px solid var(--line);box-shadow:inset -4px -4px 0 rgba(0,0,0,.28), inset 4px 4px 0 rgba(255,255,255,.05), 6px 6px 0 rgba(0,0,0,.4);padding:30px 22px 24px;text-align:center;}
-  .step-num{width:48px;height:48px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:900;background:var(--grass);color:#fff;border:3px solid var(--line);box-shadow:inset -4px -4px 0 rgba(0,0,0,.3), inset 4px 4px 0 rgba(255,255,255,.3);text-shadow:2px 2px 0 rgba(0,0,0,.5);}
+  .step{
+    position:relative;
+    background:var(--panel);
+    border:3px solid var(--line);
+    box-shadow:inset -4px -4px 0 rgba(0,0,0,.28), inset 4px 4px 0 rgba(255,255,255,.05), 6px 6px 0 rgba(0,0,0,.4);
+    padding:30px 22px 24px;
+    text-align:center;
+  }
+  .step-num{
+    width:48px;height:48px;margin:0 auto 16px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:22px;font-weight:900;
+    background:var(--grass);color:#fff;
+    border:3px solid var(--line);
+    box-shadow:inset -4px -4px 0 rgba(0,0,0,.3), inset 4px 4px 0 rgba(255,255,255,.3);
+    text-shadow:2px 2px 0 rgba(0,0,0,.5);
+  }
   .step h3{font-size:17px;font-weight:800;letter-spacing:1px;margin-bottom:8px;}
   .step p{font-size:14px;color:var(--muted);}
-  .step code{font-family:ui-monospace,Consolas,monospace;color:var(--gold);font-size:13.5px;background:rgba(0,0,0,.4);padding:1px 6px;border-radius:2px;}
+  .step code{
+    font-family:ui-monospace,Consolas,monospace;
+    color:var(--gold);font-size:13.5px;
+    background:rgba(0,0,0,.4);padding:1px 6px;border-radius:2px;
+  }
 
   /* ============ 规则 ============ */
   .rules-list{display:grid;gap:12px;max-width:860px;margin:0 auto;}
-  .rule{display:flex;gap:16px;align-items:flex-start;padding:16px 20px;background:var(--panel);border:3px solid var(--line);box-shadow:inset -4px -4px 0 rgba(0,0,0,.28), inset 4px 4px 0 rgba(255,255,255,.05);}
-  .rule-idx{flex:none;width:30px;height:30px;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#fff;background:#b4534b;border:3px solid var(--line);box-shadow:inset -3px -3px 0 rgba(0,0,0,.3), inset 3px 3px 0 rgba(255,255,255,.25);}
+  .rule{
+    display:flex;gap:16px;align-items:flex-start;
+    padding:16px 20px;
+    background:var(--panel);
+    border:3px solid var(--line);
+    box-shadow:inset -4px -4px 0 rgba(0,0,0,.28), inset 4px 4px 0 rgba(255,255,255,.05);
+  }
+  .rule-idx{
+    flex:none;width:30px;height:30px;margin-top:2px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:14px;font-weight:900;color:#fff;
+    background:#b4534b;
+    border:3px solid var(--line);
+    box-shadow:inset -3px -3px 0 rgba(0,0,0,.3), inset 3px 3px 0 rgba(255,255,255,.25);
+  }
   .rule p{font-size:14.5px;color:#c3cbd8;}
 
   /* ============ 页脚 ============ */
-  footer{background:#0d0f14;border-top:3px solid var(--line);padding:56px 0 40px;text-align:center;}
-  .foot-logo{display:inline-flex;align-items:center;gap:12px;font-size:20px;font-weight:900;letter-spacing:3px;margin-bottom:16px;}
+  footer{
+    background:#0d0f14;
+    border-top:3px solid var(--line);
+    padding:56px 0 40px;
+    text-align:center;
+  }
+  .foot-logo{
+    display:inline-flex;align-items:center;gap:12px;
+    font-size:20px;font-weight:900;letter-spacing:3px;margin-bottom:16px;
+  }
   footer .desc{color:var(--muted);font-size:14px;max-width:620px;margin:0 auto 22px;}
   .foot-links{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:26px;}
-  .foot-links a{padding:8px 16px;font-size:14px;color:var(--muted);border:3px solid var(--line);background:var(--panel);transition:.15s;}
+  .foot-links a{
+    padding:8px 16px;font-size:14px;color:var(--muted);
+    border:3px solid var(--line);background:var(--panel);
+    transition:.15s;
+  }
   .foot-links a:hover{color:#fff;background:var(--panel2);}
   .copyright{color:#5f6878;font-size:12.5px;line-height:2;}
 
@@ -496,15 +603,16 @@
       <span class="logo-text">生存大陆</span>
     </a>
 
+    <!-- 新增了 画廊 和 留言 菜单 -->
     <nav class="menu" id="menu">
       <a href="#home">首页</a>
       <a href="#notice">公告</a>
       <a href="#features">玩法</a>
+      <a href="#gallery">画廊</a>
+      <a href="#message">留言</a>
       <a href="#info">服务器</a>
       <a href="#join">加入</a>
       <a href="#rules">规则</a>
-      <a href="#gallery">画廊</a> <!-- 新增画廊 -->
-      <a href="#message">留言</a> <!-- 新增留言 -->
       <a href="#friends">友站</a>
     </nav>
 
@@ -686,7 +794,7 @@
   </div>
 </section>
 
-<!-- ================= 建筑画廊 (新增) ================= -->
+<!-- ================= 建筑画廊 ================= -->
 <section class="gallery" id="gallery">
   <div class="container">
     <div class="sec-head reveal">
@@ -699,26 +807,26 @@
         ★ 如何添加图片？
         把你的建筑截图放进 images 文件夹，然后复制下面这行，修改图片名称和标题即可。
       -->
-      <div class="gallery-item" data-title="玩家的城堡" onclick="openLightbox('images/1.jpg')">
-        <img src="images/1.jpg" alt="玩家的城堡">
+      <div class="gallery-item" data-title="极星守望塔" onclick="openLightbox('images/1.png')">
+        <img src="images/1.jpg" alt="极星守望塔">
       </div>
-      <div class="gallery-item" data-title="精妙红石机器" onclick="openLightbox('images/2.jpg')">
-        <img src="images/2.jpg" alt="精妙红石机器">
+      <div class="gallery-item" data-title="中式庭院" onclick="openLightbox('images/2.png')">
+        <img src="images/2.jpg" alt="中式庭院">
       </div>
-      <div class="gallery-item" data-title="出生点全景" onclick="openLightbox('images/3.jpg')">
-        <img src="images/3.jpg" alt="出生点全景">
+      <div class="gallery-item" data-title="出生点 龙蛋祭坛" onclick="openLightbox('images/3.png')">
+        <img src="images/3.jpg" alt="出生点 龙蛋祭坛">
       </div>
     </div>
   </div>
 </section>
 
-<!-- 灯箱 (点击图片放大的遮罩层) -->
+<!-- 灯箱 -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
   <span class="lightbox-close">&times;</span>
   <img id="lightboxImg" src="" alt="大图">
 </div>
 
-<!-- ================= 留言板 (新增) ================= -->
+<!-- ================= 留言板 ================= -->
 <section class="message-board" id="message">
   <div class="container">
     <div class="sec-head reveal">
@@ -727,7 +835,7 @@
     </div>
 
     <div class="msg-form reveal">
-      <input type="text" id="msgName" placeholder="你的游戏ID（比如：beishaoxia）" maxlength="20">
+      <input type="text" id="msgName" placeholder="你的游戏ID（比如：Steve）" maxlength="20">
       <textarea id="msgText" placeholder="写下你想说的话..." maxlength="200"></textarea>
       <button class="btn btn-primary" style="align-self:flex-end;" onclick="addMessage()">发表留言</button>
     </div>
@@ -860,10 +968,14 @@
     </div>
     <p class="desc">一个由玩家自己维护的 Minecraft 生存服务器，没有充值，没有 VIP，只有一群喜欢方块的人。</p>
 
+    <!-- 底部链接对应顶部导航 -->
     <div class="foot-links">
       <a href="#home">首页</a>
       <a href="#notice">公告</a>
       <a href="#features">玩法</a>
+      <a href="#gallery">画廊</a>
+      <a href="#message">留言</a>
+      <a href="#info">服务器</a>
       <a href="#join">加入</a>
       <a href="#rules">规则</a>
       <a href="#friends">友站</a>
@@ -952,7 +1064,6 @@
 
   /* ---------- 鼠标点击特效 (像素小方块) ---------- */
   document.addEventListener('click', function(e){
-    // 避免点击链接/按钮时过度特效遮挡
     if (e.target.closest('.btn') || e.target.closest('a')) return;
 
     const colors = ['#6aa84f', '#ffcc33', '#4dd8e6', '#b4534b', '#7d5bb5'];
@@ -991,7 +1102,6 @@
   function closeLightbox(){
     document.getElementById('lightbox').classList.remove('open');
   }
-  // 按 Esc 关闭灯箱
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') closeLightbox();
   });
@@ -1005,9 +1115,13 @@
       list.innerHTML = '<div class="msg-empty">还没有留言，来抢个沙发吧！</div>';
       return;
     }
+    // 添加了删除按钮
     list.innerHTML = data.map(m => `
       <div class="msg-item">
-        <div class="msg-name">${escapeHTML(m.name)}</div>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div class="msg-name">${escapeHTML(m.name)}</div>
+          <button onclick="deleteMessage(${m.time})" style="background:none; border:none; color:#b4534b; cursor:pointer; font-size:12px; font-weight:bold; text-decoration:underline;">删除</button>
+        </div>
         <div class="msg-text">${escapeHTML(m.text)}</div>
       </div>
     `).join('');
@@ -1021,13 +1135,21 @@
     
     const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
     data.unshift({ name, text, time: Date.now() });
-    if (data.length > 50) data.pop(); // 最多存50条
+    if (data.length > 50) data.pop();
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     
     nameInput.value = '';
     textInput.value = '';
     loadMessages();
     showToast('留言成功！');
+  }
+  function deleteMessage(time) {
+    if (!confirm('确定要删除这条留言吗？')) return;
+    let data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    data = data.filter(m => m.time !== time);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    loadMessages();
+    showToast('留言已删除');
   }
   function escapeHTML(str){
     return String(str).replace(/[&<>"']/g, s => ({
@@ -1046,7 +1168,7 @@
       musicBtn.classList.remove('playing');
       musicBtn.textContent = '🎵';
     } else {
-      bgm.play().catch(() => showToast('请把 music.mp3 放在网站根目录'));
+      bgm.play().catch(() => showToast('音乐加载中或浏览器拦截，请再点一次'));
       musicBtn.classList.add('playing');
       musicBtn.textContent = '🔊';
     }
