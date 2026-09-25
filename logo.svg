@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34 34" width="34" height="34">
+  <!-- 泥土背景 -->
+  <rect x="0" y="0" width="34" height="34" fill="#8b5a2b" />
+  <!-- 泥土的内阴影效果 -->
+  <rect x="28" y="3" width="3" height="28" fill="rgba(0,0,0,0.35)" />
+  <rect x="3" y="28" width="28" height="3" fill="rgba(0,0,0,0.35)" />
+  <rect x="3" y="3" width="3" height="28" fill="rgba(255,255,255,0.12)" />
+  <rect x="3" y="3" width="28" height="3" fill="rgba(255,255,255,0.12)" />
+  
+  <!-- 草皮部分（顶部38%） -->
+  <rect x="0" y="0" width="34" height="13" fill="#6aa84f" />
+  <!-- 草皮和泥土的分界线 -->
+  <rect x="0" y="13" width="34" height="3" fill="#0b0d12" />
+  
+  <!-- 草皮的内阴影效果 -->
+  <rect x="29" y="0" width="2" height="13" fill="rgba(0,0,0,0.2)" />
+  <rect x="0" y="11" width="32" height="2" fill="rgba(0,0,0,0.2)" />
+  <rect x="0" y="0" width="2" height="13" fill="rgba(255,255,255,0.28)" />
+  <rect x="0" y="0" width="32" height="2" fill="rgba(255,255,255,0.28)" />
+
+  <!-- 最外层的黑色边框 -->
+  <rect x="1.5" y="1.5" width="31" height="31" fill="none" stroke="#0b0d12" stroke-width="3" />
+</svg>
