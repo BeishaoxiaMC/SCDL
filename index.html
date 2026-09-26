@@ -583,6 +583,41 @@
   }
   .toast.show{transform:translate(-50%,0);}
 
+  /* ============ 音乐播放器 ============ */
+  .music-player{
+    position:fixed;bottom:20px;right:20px;z-index:998;
+    display:flex;align-items:center;gap:10px;
+  }
+  .music-nav,
+  .music-btn{
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;background:var(--grass);
+    border:3px solid var(--line);
+    box-shadow:inset -4px -4px 0 rgba(0,0,0,.35), 5px 5px 0 rgba(0,0,0,.45);
+    cursor:pointer;font:inherit;
+    transition:transform .1s;
+    border-radius:50%;
+  }
+  .music-nav{
+    width:42px;height:42px;
+    font-size:16px;
+  }
+  .music-btn{
+    width:50px;height:50px;
+    font-size:22px;
+  }
+  .music-nav:active,
+  .music-btn:active{
+    transform:translate(3px,3px);
+    box-shadow:inset -4px -4px 0 rgba(0,0,0,.35), 2px 2px 0 rgba(0,0,0,.45);
+  }
+  .music-btn.playing{background:var(--gold);color:#0d0f14;}
+  .music-nav:focus-visible,
+  .music-btn:focus-visible{
+    outline:3px solid var(--gold);
+    outline-offset:3px;
+  }
+
   /* ============ 响应式 ============ */
   @media (max-width:900px){
     .menu{
@@ -637,7 +672,7 @@
       <a href="#join">加入</a>
       <a href="#rules">规则</a>
       <a href="#faq">常见问题</a>
-      <a href="#friends">友站</a>
+      <a href="#friends">友站和联系方式</a>
     </nav>
 
     <div class="nav-cta">
@@ -659,7 +694,7 @@
   <div class="hero-inner">
     <span class="tag">生存 · 建造 · 生电</span>
     <h1>生存大陆</h1>
-    <p class="sub">一个不用氪金、不用排队、2026年8月开荒的生存养老服。<br>带上你的镐子，来这片大陆盖个家吧。</p>
+    <p class="sub">一个不用氪金、没有神权、不用排队、自2026年8月正式开服的生存养老服。<br>带上你的镐子，来这片大陆盖个家吧。</p>
 
     <div class="ip-box">
       <code id="ipText">SCDL.9666.fun:28769</code>
@@ -731,23 +766,6 @@
           管理员niaiwo将在中秋假期和国庆假期发放福利，共计6组钻石，4组铁，3组下届合金，5组金锭，错过了不补发。
         </p>
       </article>
-
-      <!-- ======== 公告 4 ======== -->
-      <article class="notice-item reveal" style="--accent:#2f9ea8">
-        <div class="notice-top">
-          <span class="notice-tag tag-info">维护</span>
-          <time class="notice-date">2026-09-13</time>
-        </div>
-        <h3 class="notice-title">9 月 30 日晚上关服维护</h3>
-        <p class="notice-text">
-          维护时间：<b>9 月 30 日 22:00 - 10 月 1 日 6:00</b>（预计 8 小时）。
-          维护期间服务器将关闭，请在9 月 30 日 22:00 前 <b>提前下线</b> ，避免物品丢失。
-        </p>
-        <p class="notice-text">
-          本次维护内容：存档备份、插件升级、修复已知的漏洞、为国庆假期做准备。
-        </p>
-      </article>
-
 
     </div>
   </div>
@@ -824,7 +842,7 @@
       <div class="gallery-item" data-title="出生点 龙蛋祭坛" onclick="openLightbox('images/3.png')">
         <img src="images/3.png" alt="出生点 龙蛋祭坛" loading="lazy">
       </div>
-      <div class="gallery-item" data-title="DBCJ-埃菲尔铁塔" onclick="openLightbox('images/4.png')">
+      <div class="gallery-item" data-title="DBCJ-灯塔" onclick="openLightbox('images/4.png')">
         <img src="images/4.png" alt="DBCJ-埃菲尔铁塔" loading="lazy">
       </div>
       <div class="gallery-item" data-title="DBCJ-大会堂" onclick="openLightbox('images/5.png')">
@@ -832,6 +850,15 @@
       </div>
       <div class="gallery-item" data-title="DBCJ-落蕊公会" onclick="openLightbox('images/6.png')">
         <img src="images/6.png" alt="DBCJ-落蕊公会" loading="lazy">
+      </div>
+      <div class="gallery-item" data-title="DBCJ-人间之里" onclick="openLightbox('images/7.png')">
+        <img src="images/7.png" alt="DBCJ-落蕊公会" loading="lazy">
+      </div>
+      <div class="gallery-item" data-title="DBCJ-风公会" onclick="openLightbox('images/8.png')">
+        <img src="images/8.png" alt="DBCJ-风公会" loading="lazy">
+      </div>
+      <div class="gallery-item" data-title="DBCJ-云顶花园" onclick="openLightbox('images/9.png')">
+        <img src="images/9.png" alt="DBCJ-云顶花园" loading="lazy">
       </div>
     </div>
   </div>
@@ -857,8 +884,8 @@
       <div class="info-item"><span class="k">Java 版本</span><span class="v green">1.21.11（推荐）</span></div>
       <div class="info-item"><span class="k">正版验证</span><span class="v cyan">关闭 · 离线可进</span></div>
       <div class="info-item"><span class="k">最大人数</span><span class="v">10 人</span></div>
-      <div class="info-item"><span class="k">服务器地区</span><span class="v">中国 · 北京 BGP 多线</span></div>
-      <div class="info-item"><span class="k">玩家交流群</span><span class="v">647143590（必进）</span></div>
+      <div class="info-item"><span class="k">服务器地区</span><span class="v">中国 · 北京</span></div>
+      <div class="info-item"><span class="k">玩家交流群</span><span class="v">647143590(必进)</span></div>
     </div>
   </div>
 </section>
@@ -875,7 +902,7 @@
       <div class="step reveal">
         <div class="step-num">1</div>
         <h3>启动游戏</h3>
-        <p>打开启动器，选择 <code>1.21.11（推荐）</code> 版本并进入游戏。</p>
+        <p>打开启动器，选择 <code>1.21.11(推荐)</code> 版本并进入游戏。</p>
       </div>
 
       <div class="step reveal">
@@ -952,12 +979,12 @@
 
       <details class="faq-item">
         <summary class="faq-q">怎么保护我的建筑和箱子？</summary>
-        <div class="faq-a">请及时圈地保护自己的建筑与箱子，具体用法可以在群里询问管理，或者查看服务器内的帮助告示牌。</div>
+        <div class="faq-a">请及时圈地保护自己的建筑与箱子，具体用法可查看群公告，或者查看服务器内的指令帮助告示牌。</div>
       </details>
 
       <details class="faq-item">
         <summary class="faq-q">服务器什么时候开？</summary>
-        <div class="faq-a">服务器仅在<b>节假日</b>开启，请勿在工作日时催服主开服。具体开服时间会在群公告和网站公告栏通知，请留意查看。</div>
+        <div class="faq-a">服务器仅在<b>节假日</b>开启，请勿在工作日时催服主开服。具体开服时间会在群公告通知，请留意查看。</div>
       </details>
 
       <details class="faq-item">
@@ -967,12 +994,12 @@
 
       <details class="faq-item">
         <summary class="faq-q">可以用作弊客户端吗？</summary>
-        <div class="faq-a"><b>绝对不可以。</b>禁止使用任何外挂、作弊客户端、连点器、宏脚本。一经发现，永久封禁，不予解封。</div>
+        <div class="faq-a"><b>绝对不可以。</b>禁止使用任何外挂、作弊客户端、连点器、宏脚本。情节较轻，临时封禁。情节严重，<b>永久封禁，不予解封</b>。</div>
       </details>
 
       <details class="faq-item">
         <summary class="faq-q">怎么加群？</summary>
-        <div class="faq-a">在页面底部的"友站与联系方式"区域，点击 <b>SCDL QQ交流群</b> 即可跳转加群。群号：<b>647143590</b>（必进）。</div>
+        <div class="faq-a">在页面底部的"友站与联系方式"区域，点击 <b>SCDL 交流群</b>按钮即可跳转加群。群号：<b>647143590</b>（必进）。</div>
       </details>
     </div>
   </div>
@@ -983,17 +1010,15 @@
   <div class="container">
     <div class="sec-head reveal">
       <h2 class="sec-title">友站<span class="accent">和</span>联系方式</h2>
-      <p class="sec-sub">欢迎互换友链，一起交流开服经验</p>
+      <p class="sec-sub">友服：DBCJ生存服</p>
     </div>
     
     <div class="friends-grid reveal">
-      <a href="https://dbcj.top" class="friend-card" target="_blank">DBCJ官网</a>
-      <a href="https://qm.qq.com/q/rcSMTvFZAc" class="friend-card" target="_blank">DBCJ-1群(已满)</a>
-      <a href="https://qm.qq.com/q/4G3rMrWsnC" class="friend-card" target="_blank">DBCJ-2群</a>
-      <a href="https://qm.qq.com/q/3xnAPm3QE8" class="friend-card" target="_blank">DBCJ-3群</a>
-      <a href="https://space.bilibili.com/1758634021?spm_id_from=333.1387.follow.user_card.click" class="friend-card" target="_blank">DBCJ-bilibili</a>
-      <a href="https://space.bilibili.com/3706964014008690?spm_id_from=333.1007.0.0" class="friend-card" target="_blank">SCDL-bilibili</a>
-      <a href="https://qm.qq.com/q/vYr0rvB2xi" class="friend-card" target="_blank">SCDL-QQ交流群</a>
+      <a href="https://space.bilibili.com/3706964014008690?spm_id_from=333.1007.0.0" class="friend-card" target="_blank">SCDL bilibili</a>
+      <a href="https://qm.qq.com/q/vYr0rvB2xi" class="friend-card" target="_blank">SCDL 交流群</a>
+      <a href="https://dbcj.top" class="friend-card" target="_blank">友站 · DBCJ 官网</a>
+      <a href="https://space.bilibili.com/1758634021?spm_id_from=333.1387.follow.user_card.click" class="friend-card" target="_blank">友站 · DBCJ bilibili</a>
+      <a href="https://www.zgric.top" class="friend-card" target="_blank">友站 · zgric团队</a>
     </div>
   </div>
 </section>
@@ -1016,7 +1041,7 @@
       <a href="#join">加入</a>
       <a href="#rules">规则</a>
       <a href="#faq">常见问题</a>
-      <a href="#friends">友站</a>
+      <a href="#friends">友站和联系方式</a>
       <a href="#" data-copy>复制 IP</a>
       <a href="#home">↑ 顶部</a>
     </div>
@@ -1028,6 +1053,14 @@
     </p>
   </div>
 </footer>
+
+<!-- 背景音乐按钮 -->
+<audio id="bgm" preload="none"></audio>
+<div class="music-player">
+  <button class="music-nav" id="musicPrev" title="上一首" aria-label="上一首">⏮</button>
+  <button class="music-btn" id="musicBtn" title="播放/暂停背景音乐" aria-label="播放背景音乐">🎵</button>
+  <button class="music-nav" id="musicNext" title="下一首" aria-label="下一首">⏭</button>
+</div>
 
 <div class="toast" id="toast">已复制</div>
 
@@ -1172,6 +1205,86 @@
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') closeLightbox();
   });
+
+  /* ---------- 背景音乐控制（多曲目切换） ---------- */
+  /* ★ 添加音乐：往下复制一行，改成你的文件名和曲目名 */
+  const PLAYLIST = [
+    { src: 'music/1.ogg', title: 'Cat · C418' }
+  ];
+
+  const musicBtn  = document.getElementById('musicBtn');
+  const musicPrev = document.getElementById('musicPrev');
+  const musicNext = document.getElementById('musicNext');
+  const bgm       = document.getElementById('bgm');
+
+  let currentIndex = 0;
+  let isPlaying = false;
+
+  /* 只有一首时隐藏上/下一首按钮 */
+  if (PLAYLIST.length <= 1) {
+    musicPrev.style.display = 'none';
+    musicNext.style.display = 'none';
+  }
+
+  function setBtnState(playing){
+    isPlaying = playing;
+    if (playing) {
+      musicBtn.classList.add('playing');
+      musicBtn.textContent = '🔊';
+      musicBtn.setAttribute('aria-label', '暂停背景音乐');
+    } else {
+      musicBtn.classList.remove('playing');
+      musicBtn.textContent = '🎵';
+      musicBtn.setAttribute('aria-label', '播放背景音乐');
+    }
+  }
+
+  /* 加载指定曲目；autoplay=true 时自动播放；silent=true 时不弹提示 */
+  function loadTrack(index, autoplay, silent){
+    if (!PLAYLIST.length) return;
+    currentIndex = (index + PLAYLIST.length) % PLAYLIST.length;
+    const track = PLAYLIST[currentIndex];
+
+    bgm.src = track.src;
+    bgm.load();
+
+    if (autoplay) {
+      bgm.play().then(() => {
+        setBtnState(true);
+      }).catch(() => {
+        setBtnState(false);
+        showToast('音乐加载中或浏览器拦截，请再点一次');
+      });
+    }
+
+    if (!silent) {
+      showToast('🎵 ' + track.title);
+    }
+  }
+
+  /* 播放 / 暂停 */
+  musicBtn.addEventListener('click', () => {
+    if (isPlaying) {
+      bgm.pause();
+      setBtnState(false);
+    } else {
+      bgm.play().then(() => {
+        setBtnState(true);
+      }).catch(() => {
+        showToast('音乐加载中或浏览器拦截，请再点一次');
+      });
+    }
+  });
+
+  /* 上一首 / 下一首：不管之前是播是停，切完直接播 */
+  musicPrev.addEventListener('click', () => loadTrack(currentIndex - 1, true));
+  musicNext.addEventListener('click', () => loadTrack(currentIndex + 1, true));
+
+  /* 一首播完自动切下一首 */
+  bgm.addEventListener('ended', () => loadTrack(currentIndex + 1, true, true));
+
+  /* 初始化：预载第 1 首，不自动播、不弹提示 */
+  loadTrack(0, false, true);
 
   /* ---------- 滚动淡入 ---------- */
   const io = new IntersectionObserver((entries) => {
