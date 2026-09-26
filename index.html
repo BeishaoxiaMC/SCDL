@@ -126,10 +126,15 @@
     width:min(1160px,92vw);margin:0 auto;
     min-height:72px;
     display:flex;align-items:center;gap:22px;
-    flex-wrap:wrap;
+    flex-wrap:nowrap;
     padding:10px 0;
   }
-  .logo{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:2px;font-size:18px;}
+  .logo{
+    display:flex;align-items:center;gap:12px;
+    font-weight:900;letter-spacing:2px;font-size:18px;
+    flex-shrink:0;
+    white-space:nowrap;
+  }
   .cube{
     width:34px;height:34px;position:relative;flex:none;
     background:var(--dirt);
@@ -144,11 +149,12 @@
   }
   .menu{
     display:flex;gap:4px;margin-left:auto;
-    flex-wrap:wrap;
+    flex-wrap:nowrap;
   }
   .menu a{
     padding:8px 12px;font-size:15px;font-weight:600;color:var(--muted);
     border:3px solid transparent;transition:.15s;
+    white-space:nowrap;
   }
   .menu a:hover{color:var(--text);background:rgba(128,128,128,.12);border-color:var(--line);}
   .nav-cta{display:flex;align-items:center;gap:10px;}
@@ -553,7 +559,7 @@
   footer{
     background:var(--footer-bg);
     border-top:3px solid var(--line);
-    padding:56px 0 40px;
+    padding:56px 0 110px;
     text-align:center;
   }
   .foot-logo{
@@ -619,7 +625,18 @@
   }
 
   /* ============ 响应式 ============ */
-  @media (max-width:900px){
+  /* 窄桌面/小平板：先收紧菜单和按钮，确保一行放得下 */
+  @media (max-width:1300px){
+    .nav-inner{gap:14px;}
+    .menu{gap:2px;}
+    .menu a{padding:8px 8px;font-size:13px;}
+    .nav-cta{gap:6px;}
+    .nav-cta .btn-sm{padding:7px 10px;font-size:12px;}
+    .nav-cta .btn-copy-nav{padding:7px 10px;font-size:12px;}
+  }
+
+  /* 手机/窄屏：才切换成汉堡菜单 */
+  @media (max-width:1100px){
     .menu{
       position:absolute;
       top:100%;
@@ -634,9 +651,8 @@
     }
     :root[data-theme="light"] .menu{background:rgba(240,242,245,.98);}
     .menu.open{display:flex;}
-    .menu a{padding:14px 12px;border-bottom:2px solid rgba(128,128,128,.12);}
+    .menu a{padding:14px 12px;border-bottom:2px solid rgba(128,128,128,.12);font-size:15px;}
     .menu-toggle{display:inline-flex;margin-left:auto;}
-    .nav-cta .btn-copy-nav{display:none;}
     .nav-inner{gap:12px;}
     section{padding:72px 0;}
     .hero{padding:120px 5vw 130px;}
