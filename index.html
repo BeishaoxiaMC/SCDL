@@ -365,105 +365,6 @@
     color:var(--grass-light);
   }
 
-  /* ============ 公告栏 ============ */
-  .notice{
-    background:var(--section-bg);
-    border-top:3px solid var(--line);
-    border-bottom:3px solid var(--line);
-    position:relative;
-  }
-  .notice::before{
-    content:"";position:absolute;left:0;right:0;top:0;height:10px;
-    background:repeating-linear-gradient(90deg,#8b5a2b 0 26px,#7a4e25 26px 52px);
-    border-bottom:3px solid var(--line);
-  }
-
-  .notice-board{
-    max-width:900px;margin:0 auto;
-    display:grid;gap:16px;
-  }
-
-  .notice-item{
-    --accent:#6aa84f;
-    position:relative;
-    padding:22px 26px 22px 32px;
-    background:var(--panel);
-    border:3px solid var(--line);
-    box-shadow:
-      inset -4px -4px 0 rgba(0,0,0,.28),
-      inset 4px 4px 0 rgba(255,255,255,.05),
-      6px 6px 0 rgba(0,0,0,.4);
-    transition:transform .16s ease, box-shadow .16s ease;
-  }
-  .notice-item::before{
-    content:"";position:absolute;left:0;top:0;bottom:0;width:9px;
-    background:var(--accent);
-    border-right:3px solid var(--line);
-    box-shadow:inset -3px 0 0 rgba(0,0,0,.25);
-  }
-  .notice-item:hover{
-    transform:translateY(-4px);
-    box-shadow:
-      inset -4px -4px 0 rgba(0,0,0,.28),
-      inset 4px 4px 0 rgba(255,255,255,.05),
-      6px 10px 0 rgba(0,0,0,.5);
-  }
-  .notice-item.pinned{
-    background:var(--panel2);
-    box-shadow:
-      inset -4px -4px 0 rgba(0,0,0,.28),
-      inset 4px 4px 0 rgba(255,255,255,.07),
-      6px 6px 0 rgba(0,0,0,.45),
-      0 0 0 3px rgba(180,83,75,.18);
-  }
-
-  .notice-top{
-    display:flex;align-items:center;justify-content:space-between;
-    gap:14px;flex-wrap:wrap;margin-bottom:12px;
-  }
-  .notice-tag{
-    display:inline-block;
-    padding:3px 11px;
-    font-size:12px;font-weight:900;letter-spacing:1.5px;
-    color:#fff;
-    border:3px solid var(--line);
-    box-shadow:inset -3px -3px 0 rgba(0,0,0,.32), inset 3px 3px 0 rgba(255,255,255,.28);
-    text-shadow:1px 1px 0 rgba(0,0,0,.45);
-  }
-  .tag-pin{background:#b4534b;}
-  .tag-update{background:#c9a227;}
-  .tag-event{background:#2f9ea8;}
-  .tag-info{background:#6d7480;}
-
-  .notice-date{
-    font-family:ui-monospace,Consolas,monospace;
-    font-size:12.5px;letter-spacing:1px;color:var(--muted);
-  }
-  .notice-title{
-    font-size:18px;font-weight:900;letter-spacing:1px;
-    margin-bottom:8px;
-    text-shadow:2px 2px 0 rgba(0,0,0,.6);
-  }
-  :root[data-theme="light"] .notice-title{text-shadow:2px 2px 0 rgba(0,0,0,.12);}
-  .notice-text{
-    font-size:14.5px;color:var(--card-text);line-height:1.95;
-  }
-  .notice-text + .notice-text{margin-top:6px;}
-  .notice-text b{color:var(--grass-light);}
-  .notice-text .gold{color:var(--gold);}
-  .notice-text .cyan{color:var(--diamond);}
-
-  .notice-list{
-    margin:10px 0 0 4px;padding:0;list-style:none;
-    font-size:14.5px;color:var(--card-text);
-  }
-  .notice-list li{position:relative;padding-left:20px;line-height:1.9;}
-  .notice-list li::before{
-    content:"■";
-    position:absolute;left:0;top:0;
-    color:var(--accent);font-size:11px;line-height:2.4;
-  }
-
   /* ============ 特色卡片 ============ */
   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;}
   .card{
@@ -658,7 +559,6 @@
     .hero{padding:120px 5vw 130px;}
     .hero h1{letter-spacing:4px;}
     .ip-box{padding:12px;gap:10px;flex-direction:column;}
-    .notice-item{padding:20px 18px 20px 26px;}
     .gallery-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));}
   }
   @media (max-width:420px){
@@ -681,7 +581,6 @@
 
     <nav class="menu" id="menu">
       <a href="#home">首页</a>
-      <a href="#notice">公告</a>
       <a href="#features">玩法</a>
       <a href="#gallery">画廊</a>
       <a href="#info">服务器</a>
@@ -718,75 +617,13 @@
     </div>
 
     <div class="hero-btns">
-      <a class="btn btn-primary" href="#join">立即加入 →</a>
-      <a class="btn btn-ghost" href="#notice">查看公告</a>
+      <a class="btn btn-primary" href="#join">立即加入</a>
+      <a class="btn btn-ghost" href="#features">玩法特色</a>
     </div>
   </div>
 
   <div class="ground"></div>
 </section>
-
-<!-- ================= 公告栏 ================= -->
-<section class="notice" id="notice">
-  <div class="container">
-    <div class="sec-head reveal">
-      <h2 class="sec-title">服务器<span class="accent">公告</span></h2>
-      <p class="sec-sub">最新消息、版本更新与活动通知，请定期查看</p>
-    </div>
-
-    <div class="notice-board">
-
-      <!-- ======== 公告 1（置顶） ======== -->
-      <article class="notice-item pinned reveal" style="--accent:#b4534b">
-        <div class="notice-top">
-          <span class="notice-tag tag-pin">置顶</span>
-          <time class="notice-date">2026-09-12</time>
-        </div>
-        <h3 class="notice-title">【必读】服务器新手指引与规则须知</h3>
-        <p class="notice-text">
-          欢迎来到生存大陆！第一次进服请先在出生点阅读告示牌，并完成 <b>/reg 密码 密码</b> 注册账号。
-          服务器支持离线登录，但请务必设置密码，避免被他人顶号。<span class="gold">（密码长度至少8位）</span>
-        </p>
-        <ul class="notice-list">
-          <li>禁止使用外挂、作弊客户端与连点器，违者永久封禁。</li>
-          <li>请及时圈地保护自己的建筑与箱子。</li>
-          <li>遇到问题可在群里 @管理，不要在聊天栏刷屏。</li>
-          <li>服务器仅在节假日开启，请勿在工作日时催服主开服！</li>
-        </ul>
-      </article>
-
-      <!-- ======== 公告 2 ======== -->
-      <article class="notice-item reveal" style="--accent:#c9a227">
-        <div class="notice-top">
-          <span class="notice-tag tag-update">更新</span>
-          <time class="notice-date">2026-09-13</time>
-        </div>
-        <h3 class="notice-title">所有插件已更新</h3>
-        <p class="notice-text">
-          所有插件均已升级至 <b>最新版本</b>，支持 1.12.2~26.2 全版本客户端进入。
-          旧版本客户端（1.8 及以下）将无法连接，请及时更新客户端版本。
-        </p>
-        <p class="notice-text">
-          本次更新同步优化了领地粒子加载逻辑，TPS 长期稳定在 20.0，卡顿问题已明显改善。
-        </p>
-      </article>
-
-      <!-- ======== 公告 3 ======== -->
-      <article class="notice-item reveal" style="--accent:#2f9ea8">
-        <div class="notice-top">
-          <span class="notice-tag tag-event">活动</span>
-          <time class="notice-date">2026-09-21</time>
-        </div>
-        <h3 class="notice-title">国庆节和中秋节活动通知</h3>
-        <p class="notice-text">
-          管理员niaiwo将在中秋假期和国庆假期发放福利，共计6组钻石，4组铁，3组下届合金，5组金锭，错过了不补发。
-        </p>
-      </article>
-
-    </div>
-  </div>
-</section>
-
 
 <!-- ================= 玩法特色 ================= -->
 <section class="features" id="features">
@@ -1050,7 +887,6 @@
 
     <div class="foot-links">
       <a href="#home">首页</a>
-      <a href="#notice">公告</a>
       <a href="#features">玩法</a>
       <a href="#gallery">画廊</a>
       <a href="#info">服务器</a>
